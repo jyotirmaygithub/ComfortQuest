@@ -3,11 +3,7 @@ const Schema = mongoose.Schema;
 
 // auth --->> for user validation and to create the new account.
 const userDetails = new Schema({
-   first_name : {
-    type : String,
-    required: true 
-   },
-   last_name : {
+   name : {
     type : String,
     required: true 
    },

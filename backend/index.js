@@ -8,8 +8,6 @@ const port = 5000;
 
 app.use(cors());
 
-// app.use(express.json()); // we are using middle ware by writing this code
-
 // available routes in the project
 app.use("/api/auth", require("./routes/auth"));
 
