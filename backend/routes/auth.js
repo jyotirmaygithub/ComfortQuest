@@ -4,14 +4,14 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
-const fetchuser = require("../middleware/fetchUser");
+// const fetchuser = require("../middleware/fetchUser");
 require('dotenv').config();
 
-const JWT_secret = process.env.REACT_APP_JWT_SECRET;
+const JWT_secret = "somethingtoknow";
 
 //ROUTE 1 : creating an new user account POST : /api/auth/createuser
 router.post(
-  "/createuser",
+  "/newuser",
   [
     // CHECK 1 : Entered credentials are checking by the validation function.
     body("name", "Enter a valid name").isLength({ min: 4 }),
@@ -22,15 +22,16 @@ router.post(
   ],
   async (req, res) => {
     // Validation function to check inputs.
+    console.log(req.body)
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({outcome, errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
     try {
       // CHECK 2 : dont want two or more user of same email id.
       let newUser = await user.findOne({ email: req.body.email });
       if (newUser) {
-        return res.status(400).json({outcome, message : "User already exists"});
+        return res.status(400).json({message : "User already exists"});
       }
       // salt and hash we are using to ensure better security to the user.
       // gensalt() function creates a unique set of number or letters which add-up to the actual password
