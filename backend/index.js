@@ -7,6 +7,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
+app.use(express.json()); // we are using middleware to convert raw json data into js object. 
 
 // available routes in the project
 app.use("/api/auth", require("./routes/auth"));
