@@ -11,6 +11,7 @@ app.use(express.json()); // we are using middleware to convert raw json data int
 
 // available routes in the project
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/forgetpass", require("./routes/forgetpass"));
 
 app.listen(port, () => {
   console.log(`hotel-backend is working on port number :  ${port}`);

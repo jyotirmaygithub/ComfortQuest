@@ -5,7 +5,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 // const fetchuser = require("../middleware/fetchUser");
-require("dotenv").config();
+// require("dotenv").config();
 
 const JWT_secret = "somethingtoknow";
 
@@ -109,4 +109,47 @@ router.post(
   }
 );
 
-module.exports = router;
+
+router.post("/renew",
+[
+  body("email", "Enter a valid Email").isEmail()
+],
+ async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { email } = req.body;
+
+  const existingUser = await user.findById({ email });
+  console.log("existing user = ", existingUser);
+
+  if (!existingUser) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  //   const { otpSecret, otp } = await generateOtpAndSecret();
+  //   const otpExpiry = Date.now() + 300000; // OTP expiry in 5 minutes
+
+  // Save OTP secret and expiry in the user object
+  //   existingUser.otpSecret = otpSecret;
+  //   existingUser.otpExpiry = otpExpiry;
+
+  // Send OTP via email
+  //   const mailOptions = {
+  //     from: process.env.MY_EMAIL_ID,
+  //     to: email,
+  //     subject: 'OTP for Password Reset',
+  //     text: `Your OTP for password reset is: ${otp}`,
+  //   };
+
+  try {
+    // await transporter.sendMail(mailOptions);
+    res.json({ message: "OTP sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error sending email" });
+  }
+});
+module.exports = router; 
