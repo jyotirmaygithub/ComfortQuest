@@ -19,8 +19,6 @@ const userDetails = new Schema({
     type: String,
     required: true,
   },
-  resetToken:String,
-  expireToken:Date,
   date: {
     type: Date,
     default: Date.now,

@@ -4,8 +4,6 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
-// const fetchuser = require("../middleware/fetchUser");
-// require("dotenv").config();
 
 const JWT_secret = "somethingtoknow";
 
@@ -109,31 +107,4 @@ router.post(
   }
 );
 
-
-router.post("/renew",
-[
-  body("email", "Enter a valid Email").isEmail()
-],
- async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { email } = req.body;
-
-  const existingUser = await user.findOne({ email });
-  console.log("existing user = ", existingUser);
-
-  if (!existingUser) {
-    return res.status(404).json({ error: "User not found" });
-  }
-
-  try {
-    res.json({ message: "OTP sent successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error sending email" });
-  }
-});
 module.exports = router; 
