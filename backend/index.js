@@ -1,7 +1,9 @@
 const connectToMongo = require("./config/db");
 const express = require("express");
-var cors = require("cors");
-import {v2 as cloudinary} from 'cloudinary';
+const cors = require("cors");
+const cloudinary = require("cloudinary").v2
+const cookieSession  = require('cookie-session');
+const cookieParser = require("cookie-parser")
 
 // connect with database
 connectToMongo();
@@ -19,11 +21,11 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
-app.use(express.json()); // we are using middleware to convert raw json data into js object. 
+// we are using middleware to convert raw json data into js object. 
+app.use(express.json());
 
 // available routes in the project
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/forgetpass", require("./routes/forgetpass"));
 
 app.listen(port, () => {
   console.log(`hotel-backend is working on port number :  ${port}`);

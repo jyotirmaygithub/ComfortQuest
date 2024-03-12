@@ -12,8 +12,7 @@ router.post(
   "/newuser",
   [
     // CHECK 1 : Entered credentials are checking by the validation function.
-    body("first_name", "Enter a valid name").isLength({ max: 50 }),
-    body("last_name", "Enter a  valid last name").isLength({ max: 50 }),
+    body("name", "Enter a  valid last name").isLength({ max: 50 }),
     body("email", "Enter a valid Email").isEmail(),
     body("password", "Password must be of atleast 6 characters").isLength({
       min: 6,
@@ -23,7 +22,7 @@ router.post(
     // Validation function to check inputs.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() ,message : "Name, email and password are required" });
     }
     try {
       // CHECK 2 : dont want two or more user of same email id.
@@ -39,8 +38,7 @@ router.post(
       const secPass = await bcrypt.hash(req.body.password, salt);
       // DOCUMENT CREATION : User entered data is being send to the database.
       newUser = await user.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        name: req.body.name,
         email: req.body.email,
         password: secPass,
       });
@@ -79,7 +77,7 @@ router.post(
       // matching will make entire document avaiable to use.
       let existingUser = await user.findOne({ email });
       if (!existingUser) {
-        return res.status(401).json({ outcome, msg: "Invalid Credentials" });
+        return res.status(401).json({ outcome, msg: "User does not exist!" });
       }
       // CHECK 2 : Password (comparision by using bcrypt library).
 
