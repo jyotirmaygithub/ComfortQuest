@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userDetails = new Schema({
-  first_name: {
-    type: String,
-    required: true, // this means that the field is mandatory to fill in. If it's not filled in, an error will be
-  },
-  last_name: {
+  name: {
     type: String,
     required: true,
   },
