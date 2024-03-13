@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const uploadImage = require("./trial")
 const fetchUserId = require("../middleware/fetchUserId");
 
 router.get("/edit-profile", fetchUserId, async (req, res) => {
@@ -13,7 +14,9 @@ router.get("/edit-profile", fetchUserId, async (req, res) => {
       // Check if the picture field is present in the request
       if (picture !== undefined) {
         // Update the picture field only if a new picture is provided
-        userDocument.picture = picture;
+        const imageUrl = await uploadImage(picture);
+        console.log("image url = " ,imageUrl)
+        userDocument.picture = imageUrl;
       }
       // updating the existing  document with the updated fields
       await userDocument.save();

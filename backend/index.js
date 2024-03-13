@@ -1,19 +1,19 @@
 const connectToMongo = require("./config/db");
 const express = require("express");
 const cors = require("cors");
-const cloudinary = require("cloudinary").v2
+// const cloudinary = require("cloudinary").v2
 const cookieSession  = require('cookie-session');
 const cookieParser = require("cookie-parser")
 
 // connect with database
 connectToMongo();
 
-// cloudinary configurations.        
-cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.CLOUD_API_KEY, 
-  api_secret: process.env.CLOUD_API_SECREAT 
-});
+// // cloudinary configurations.        
+// cloudinary.config({ 
+//   cloud_name: process.env.CLOUD_NAME, 
+//   api_key: process.env.CLOUD_API_KEY, 
+//   api_secret: process.env.CLOUD_API_SECREAT 
+// });
 
 const app = express();
 
