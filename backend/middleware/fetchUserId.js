@@ -8,10 +8,11 @@ function fetchUserId(req, res, next) {
   if (!token) {
     return res.status(401).json({ msg: "No Token Provided" });
   }
-  const data = JWT.verify(token, JWT_secret);
   try {
-    console.log("what is there in the data = ", data);
-    res.send(data)
+    const data = JWT.verify(token, JWT_secret);
+    // storing id to use in future requests.
+    req.userId = data.newUser.id
+    next()
   } catch (error) {
     return res.status(401).send({ msg: "Invalid Token" });
   }
