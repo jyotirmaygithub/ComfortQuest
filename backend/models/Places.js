@@ -30,5 +30,5 @@ const placeSchema = new schema({
     }
 })
 
-const newPlaces = mongoose.model("newPlaces" , placeSchema);
+const newPlaces = mongoose.model("tourist-places" , placeSchema);
 module.exports = newPlaces
