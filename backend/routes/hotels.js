@@ -6,7 +6,6 @@ router.get("/hotels-data", async (req, res) => {
   try {
      // Retrieve all documents from the hotels collection
     const allHotels = await Hotel.find();
-    console.log(allHotels)
     res.send({ hotels: allHotels });
   } catch (error) {
     console.error("Error retrieving hotels:", error);
