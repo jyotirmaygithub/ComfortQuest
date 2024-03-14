@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
-const placeSchema = new schema({
+const hotelSchema = new Schema({
     owner : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
@@ -30,5 +31,5 @@ const placeSchema = new schema({
     }
 })
 
-const newPlaces = mongoose.model("tourist-places" , placeSchema);
+const newPlaces = mongoose.model("hotels" , hotelSchema);
 module.exports = newPlaces

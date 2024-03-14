@@ -27,7 +27,7 @@ app.use(express.json());
 // available routes in the project
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/editProfile" , require("./routes/editProfile"))
-app.use("./api/hotels" ,require("./routes/hotels"))
+app.use("/api/hotels" ,require("./routes/hotels"))
 
 app.listen(port, () => {
   console.log(`hotel-backend is working on port number :  ${port}`);
