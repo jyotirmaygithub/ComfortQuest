@@ -19,6 +19,10 @@ const hotelSchema = new Schema({
     description : {
         type : String,
     },
+    phone : {
+        type : Number,
+        required : true
+    },
     perks : [String],
     extraInfo : {
         type : String
