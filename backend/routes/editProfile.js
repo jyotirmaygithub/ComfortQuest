@@ -4,6 +4,8 @@ const User = require("../models/User");
 const uploadImage = require("../utils/uploadCloudinary")
 const fetchUserId = require("../middleware/fetchUserId");
 
+
+// Route : to update or edit user profile.
 router.get("/edit-profile", fetchUserId, async (req, res) => {
   try {
     const { name, picture } = req.body;
@@ -14,16 +16,13 @@ router.get("/edit-profile", fetchUserId, async (req, res) => {
       // Check if the picture field is present in the request
       if (picture !== undefined) {
         // Update the picture field only if a new picture is provided
-        console.log("picture = "  , picture)
         const imageUrl = await uploadImage(picture);
-        console.log("image url = " ,imageUrl)
       }
-      // updating the existing  document with the updated fields
       await userDocument.save();
     } else {
       return res.status(404).send("No such user exists!");
     }
-    res.send({ userdocument: userDocument });
+    res.send({ "edit user document": userDocument });
   } catch (error) {
     res.status(500).send("Internal server error");
   }

@@ -11,9 +11,7 @@ cloudinary.config({
 
 // Function to upload a picture to Cloudinary.
 async function uploadImage(filePath) {
-  console.log("actual filepath = ",  filePath);
   if (fs.existsSync(filePath)) {
-    console.log('File exists:', filePath);
     return new Promise((resolve, reject) => {
       cloudinary.uploader.upload(filePath, { folder: "user/Profile/Picture" }, (error, result) => {
         if (error) {
