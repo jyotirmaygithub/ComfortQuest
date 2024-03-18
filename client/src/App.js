@@ -1,7 +1,10 @@
+import React from "react";
+import Header  from "./components/header";
+
 function App() {
   return (
    <>
-   <p>something</p>
+   <Header/>
    </>
   );
 }
