@@ -1,12 +1,12 @@
 import React from "react";
-import MenuIcon from '@mui/icons-material/Menu'; 
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchBar from "./searchBar";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
 export default function Header() {
-  
-  const { loginWithRedirect, user, isAuthenticated, isLoading, logout } = useAuth0();
-  console.log("value of user = " ,user)
+  const { loginWithRedirect, user, isAuthenticated, isLoading, logout } =
+    useAuth0();
+  console.log("value of user = ", user);
   return (
     <header
       className={`fixed top-0 z-10 flex w-screen justify-center bg-white py-4 `}
@@ -23,11 +23,13 @@ export default function Header() {
             airbnb
           </span>
         </a>
-        <div onClick={()=>loginWithRedirect()}
+        <SearchBar />
+        <div
+          onClick={() => loginWithRedirect()}
           //   to={user ? '/account' : '/login'}
           className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
-          >
-          <MenuIcon/>
+        >
+          <MenuIcon />
           <div className="z-10 h-[35px] w-[35px] overflow-hidden rounded-full">
             {/* {user ? (
               <Avatar>
