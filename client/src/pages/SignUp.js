@@ -16,7 +16,7 @@ export default function Login() {
   // const [loader,setLoader] = useState(false)
 
   function handleClickSignUp(){
-    navigate("/signup")
+    navigate("/sign")
   }
   function Copyright(props) {
     return (
@@ -129,6 +129,17 @@ export default function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
+             <MyStyledTextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Username"
+              name="name"
+              autoComplete="name"
+              onChange={onchange}
+              autoFocus
+            />
             <MyStyledTextField
               margin="normal"
               required

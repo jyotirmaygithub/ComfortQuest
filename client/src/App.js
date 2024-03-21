@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header  from "./components/header";
 import LoginPage from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   console.log("value of the client id = " , process.env.REACT_APP_AUTH_CLIENT_ID)
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Header />}/>
         <Route exact path="/login" element={<LoginPage/>}/>
+        <Route exact path="/signup" element={<SignUp/>}/>
       </Routes>
     </Router>
     </GoogleOAuthProvider>;
