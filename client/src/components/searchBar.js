@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 
 // import axiosInstance from '@/utils/axios';
 // import { usePlaces } from '../../../hooks';
@@ -45,20 +46,7 @@ export default function SearchBar(){
             className="flex rounded-r-full bg-primary py-2 px-4 md:p-2"
             // onClick={handleSearch}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={3}
-              stroke="currentColor"
-              className="mt-1 h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
+            <SearchIcon/>
             <span className="ml-1 hidden md:block">Search</span>
           </button>
         </div>

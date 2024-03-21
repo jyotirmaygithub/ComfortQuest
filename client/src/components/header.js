@@ -1,17 +1,18 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchBar from "./searchBar";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-  const { loginWithRedirect, user, isAuthenticated, isLoading, logout } =
-    useAuth0();
-  console.log("value of user = ", user);
+  const  navigate = useNavigate();
+  function handleClick(){
+    navigate("/login")
+  }
   return (
     <header
       className={`fixed top-0 z-10 flex w-screen justify-center bg-white py-4 `}
     >
-      <div className={`flex w-screen max-w-screen-xl`}>
+      <div className={`flex w-screen max-w-screen-xl justify-evenly`}>
         <a href="/" className="flex items-center gap-1">
           <img
             className="h-8 w-8 md:h-10 md:w-10"
@@ -25,7 +26,7 @@ export default function Header() {
         </a>
         <SearchBar />
         <div
-          onClick={() => loginWithRedirect()}
+          onClick={handleClick}
           //   to={user ? '/account' : '/login'}
           className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
         >
