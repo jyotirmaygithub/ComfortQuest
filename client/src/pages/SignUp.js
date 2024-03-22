@@ -15,7 +15,7 @@ import { FrontAuthFunction } from "../context/front-auth";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { handleCreateUser } = FrontAuthFunction();
+  const { handleCreateUser,handleGoogleLogin } = FrontAuthFunction();
 
   function Copyright(props) {
     return (
@@ -126,12 +126,7 @@ export default function Login() {
             <div className="flex h-[50px] justify-center">
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                  // handleGoogleLogin(credentialResponse.credential);
-                  console.log(
-                    "values of the user = " + credentialResponse.credential
-                  );
-                  const dataObject = jwtDecode(credentialResponse.credential);
-                  console.log("data object = " + dataObject);
+                  handleGoogleLogin(credentialResponse.credential);
                 }}
                 onError={() => {
                   console.log("Login Failed");
