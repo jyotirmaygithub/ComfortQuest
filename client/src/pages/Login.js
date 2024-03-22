@@ -15,8 +15,7 @@ import {FrontAuthFunction} from "../context/front-auth"
 
 export default function Login() {
   const navigate = useNavigate()
-  const {handleCreateUser} = FrontAuthFunction();
-  // const [loader,setLoader] = useState(false)
+  const {handleExistingUser} = FrontAuthFunction();
 
   function handleClickSignUp(){
     navigate("/signup")
@@ -41,72 +40,15 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const [details, setDetails] = useState({ type: "", message: "" });
-  const Navigation = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
-    // handleExistingUser(combinedState.email, combinedState.password);
+    handleExistingUser(combinedState.email, combinedState.password);
   }
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
   }
-  function handleClick() {
-    setTimeout(() => {
-      Navigation(`/signup`);
-    }, 100);
-  }
-
-  // API call : existing user log in.
-  // async function handleExistingUser(email, password) {
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.REACT_APP_DEV_URL}/api/auth/login`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ email, password }),
-  //       }
-  //     );
-  //     if (!response.ok) {
-  //       setAlertState(true);
-  //       setDetails({ type: "error", message: "Invalid Username or Password!" });
-  //       alertRemoval();
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-
-  //     setLoader(true)
-  //     const userAuth_Token = await response.json();
-
-  //     if (userAuth_Token && userAuth_Token.auth_token) {
-  //       // Set the cookie with an expiration time
-  //       const expirationDate = new Date();
-  //       expirationDate.setDate(expirationDate.getDate() + 7); // Set to expire in 7 days
-  //       document.cookie = `auth_token=${
-  //         userAuth_Token.auth_token
-  //       }; expires=${expirationDate.toUTCString()}; path=/`;
-
-  //       setDetails({ type: "success", message: "Welcome Back!" });
-  //       setAlertState(true);
-  //       alertRemoval();
-  //       handleExistingUsername()
-  //       const result = await fetchAllNotes()
-  //       setTimeout(() => {
-  //         if(result.length === 0){
-  //           Navigation(`/create-notes`);
-  //         }
-  //         else{
-  //           Navigation(`/fetchingdata`);
-  //         }
-  //       }, 2500);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching notes:", error);
-  //   }
-  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>

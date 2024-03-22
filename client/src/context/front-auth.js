@@ -12,7 +12,6 @@ function storeAuthToken(userAuth_Token){
 }
 
 async function handleCreateUser(name, email, password) {
-  console.log("value of name = " + name )
     try {
       const response = await fetch(
         `${process.env.REACT_APP_DEV_URL}/api/auth/newuser`,
@@ -28,7 +27,31 @@ async function handleCreateUser(name, email, password) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const userAuth_Token = await response.json();
-      console.log("are things working")
+      if (userAuth_Token.auth_token) {
+        console.log("this is the authtoken = " + userAuth_Token)
+        storeAuthToken(userAuth_Token);
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
+  }
+
+  async function handleExistingUser( email, password) {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DEV_URL}/api/auth/newuser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      )
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const userAuth_Token = await response.json();
       if (userAuth_Token.auth_token) {
         console.log("this is the authtoken = " + userAuth_Token)
         storeAuthToken(userAuth_Token);
@@ -40,7 +63,7 @@ async function handleCreateUser(name, email, password) {
 
 export function AuthFunction(props) {
   return (
-    <FrontAuthContext.Provider value={{ handleCreateUser }}>
+    <FrontAuthContext.Provider value={{ handleCreateUser,handleExistingUser }}>
       {props.children}
     </FrontAuthContext.Provider>
   );
