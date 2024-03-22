@@ -10,6 +10,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
   const navigate = useNavigate()
@@ -183,6 +184,8 @@ export default function Login() {
             onSuccess={(credentialResponse) => {
               // handleGoogleLogin(credentialResponse.credential);
               console.log("values of the user = " + credentialResponse.credential)
+              const dataObject = jwtDecode(credentialResponse.credential)
+              console.log("data object = " + dataObject)
             }}
             onError={() => {
               console.log('Login Failed');
