@@ -13,11 +13,11 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const [loader,setLoader] = useState(false)
 
-  function handleClickSignUp(){
-    navigate("/sign")
+  function handleClickSignUp() {
+    navigate("/sign");
   }
   function Copyright(props) {
     return (
@@ -130,7 +130,7 @@ export default function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
-             <MyStyledTextField
+            <MyStyledTextField
               margin="normal"
               required
               fullWidth
@@ -165,7 +165,7 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-            className="bg-black"
+              className="bg-black"
               type="submit"
               fullWidth
               variant="contained"
@@ -174,33 +174,28 @@ export default function Login() {
               <p>LOG IN</p>
             </Button>
             <div className="mb-4 flex w-full items-center gap-4">
-          <div className="h-0 w-1/2 border-[1px]"></div>
-          <p className="small -mt-1">or</p>
-          <div className="h-0 w-1/2 border-[1px]"></div>
-        </div>
-         {/* Google login button */}
-         <div className="flex h-[50px] justify-center">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              // handleGoogleLogin(credentialResponse.credential);
-              console.log("values of the user = " + credentialResponse.credential)
-              const dataObject = jwtDecode(credentialResponse.credential)
-              console.log("data object = " + dataObject)
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            text="continue_with"
-            width="350"
-          />
-        </div>
-
-        <div className="py-2 px-8 text-center flex text-gray-500">
-          Don't have an account yet?{' '}
-          <div onClick={handleClickSignUp} className="text-black cursor-pointer underline">
-            Register now
-          </div>
-        </div>
+              <div className="h-0 w-1/2 border-[1px]"></div>
+              <p className="small -mt-1">or</p>
+              <div className="h-0 w-1/2 border-[1px]"></div>
+            </div>
+            {/* Google login button */}
+            <div className="flex h-[50px] justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  // handleGoogleLogin(credentialResponse.credential);
+                  console.log(
+                    "values of the user = " + credentialResponse.credential
+                  );
+                  const dataObject = jwtDecode(credentialResponse.credential);
+                  console.log("data object = " + dataObject);
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                text="continue_with"
+                width="350"
+              />
+            </div>
           </Box>
         </Box>
         <Copyright sx={{ mt: 2, mb: 4 }} />
