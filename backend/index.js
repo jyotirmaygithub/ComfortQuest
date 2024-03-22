@@ -2,8 +2,6 @@ const connectToMongo = require("./config/db");
 const express = require("express");
 const cors = require("cors");
 // const cloudinary = require("cloudinary").v2
-const cookieSession  = require('cookie-session');
-const cookieParser = require("cookie-parser")
 
 // connect with database
 connectToMongo();
