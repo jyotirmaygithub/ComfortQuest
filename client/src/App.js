@@ -5,12 +5,14 @@ import Header  from "./components/header";
 import LoginPage from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import NotFoundPage from "./pages/NotFound";
+import {AuthFunction} from "./context/front-auth"
 
 function App() {
   console.log("value of the client id = " , process.env.REACT_APP_AUTH_CLIENT_ID)
   return (
    <>
    <GoogleOAuthProvider clientId={process.env.REACT_APP_AUTH_CLIENT_ID}>
+    <AuthFunction>
     <Router>
       <Routes>
         <Route exact path="/" element={<Header />}/>
@@ -19,6 +21,7 @@ function App() {
         <Route exact path="*" element={<NotFoundPage/>}/>
       </Routes>
     </Router>
+    </AuthFunction>
     </GoogleOAuthProvider>;
    </>
   );

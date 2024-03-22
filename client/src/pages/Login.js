@@ -11,9 +11,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import {FrontAuthFunction} from "../context/front-auth"
 
 export default function Login() {
   const navigate = useNavigate()
+  const {handleCreateUser} = FrontAuthFunction();
   // const [loader,setLoader] = useState(false)
 
   function handleClickSignUp(){
