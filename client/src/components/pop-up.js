@@ -7,7 +7,7 @@ import {TokenStatusContext} from "../context/tokenStatus"
 import { ContactSupport, Info, Logout,PersonOutline } from "@mui/icons-material";
 
 export default function UserName() {
-  const {checkCookie} = TokenStatusContext();
+  const {checkCookie,deleteAuthTokenCookie} = TokenStatusContext();
   const [anchorEl, setAnchorEl] = useState(false);
   const [response, setResponse] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function UserName() {
   }
 
   function handleLogout() {
-    // deleteAuthTokenCookie("auth_token");
+    deleteAuthTokenCookie("auth_token");
     navigate(`/login`);
   }
 

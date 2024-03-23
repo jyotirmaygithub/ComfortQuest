@@ -11,14 +11,18 @@ function checkCookie() {
       return true
     }
   }
-
   return false;
+}
+
+// Function : To delete the auth token.
+async function deleteAuthTokenCookie() {
+  document.cookie = `auth-token=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; Path=/;`;
 }
 
 
 export function TokenStatusFunction(props) {
   return (
-    <TokenStatus.Provider value={{ checkCookie }}>
+    <TokenStatus.Provider value={{ checkCookie ,deleteAuthTokenCookie }}>
       {props.children}
     </TokenStatus.Provider>
   );
