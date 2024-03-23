@@ -15,7 +15,7 @@ import {FrontAuthFunction} from "../context/front-auth"
 
 export default function Login() {
   const navigate = useNavigate()
-  const {handleExistingUser} = FrontAuthFunction();
+  const {handleExistingUser,handleGoogleLogin} = FrontAuthFunction();
 
   function handleClickSignUp(){
     navigate("/signup")
@@ -115,10 +115,7 @@ export default function Login() {
          <div className="flex h-[50px] justify-center">
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              // handleGoogleLogin(credentialResponse.credential);
-              console.log("values of the user = " + credentialResponse.credential)
-              const userData = jwtDecode(credentialResponse.credential)
-              console.log("user data = ",userData)
+              handleGoogleLogin(credentialResponse.credential);
             }}
             onError={() => {
               console.log('Login Failed');
