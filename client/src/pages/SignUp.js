@@ -10,8 +10,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { FrontAuthFunction } from "../context/front-auth";
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,14 +40,23 @@ export default function Login() {
   });
 
 
-  function handleSubmit(event) {
+ async function handleSubmit(event) {
     event.preventDefault();
-    console.log("things are working")
-    handleCreateUser(combinedState.name ,combinedState.email, combinedState.password);
+    returnResponse( await handleCreateUser(combinedState.name ,combinedState.email, combinedState.password));
   }
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
+  }
+
+  function returnResponse(response){
+    if (response.success) {
+      toast.success(response.message)
+      navigate('/')
+    }
+    else{
+      toast.error(response.message);
+    }
   }
 
   return (
@@ -125,9 +134,9 @@ export default function Login() {
             {/* Google login button */}
             <div className="flex h-[50px] justify-center">
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  handleGoogleLogin(credentialResponse.credential);
-                }}
+                 onSuccess={async (credentialResponse) => {
+                  returnResponse(await handleGoogleLogin(credentialResponse.credential))
+                 }}
                 onError={() => {
                   console.log("Login Failed");
                 }}

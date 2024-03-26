@@ -10,7 +10,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import {FrontAuthFunction} from "../context/front-auth"
 import { toast } from 'react-toastify';
 
@@ -53,9 +52,8 @@ export default function Login() {
 
   function returnResponse(response){
     if (response.success) {
-      console.log("if everything is right = ", response.message)
-      console.log("let the see the toast =", toast.success(response.message))
       toast.success(response.message)
+      navigate('/')
     }
     else{
       toast.error(response.message);
