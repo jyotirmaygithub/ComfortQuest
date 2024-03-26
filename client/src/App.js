@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import NotFoundPage from "./pages/NotFound";
 import { AuthFunction } from "./context/front-auth";
 import { TokenStatusFunction } from "./context/tokenStatus";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route exact path="/login" element={<LoginPage />} />
                 <Route exact path="/signup" element={<SignUp />} />
                 <Route exact path="*" element={<NotFoundPage />} />
+                <Route exact path="/account/edit-profile" element={<ProfilePage/>}/>
               </Routes>
             </Router>
             <ToastContainer autoClose={2000} transition={Slide} />

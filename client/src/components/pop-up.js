@@ -26,7 +26,7 @@ export default function UserName() {
   }
 
   function handleLogout() {
-    deleteAuthTokenCookie("auth_token");
+    deleteAuthTokenCookie();
     navigate(`/login`);
   }
 
