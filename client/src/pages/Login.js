@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,6 +12,7 @@ import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import {FrontAuthFunction} from "../context/front-auth"
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate()
@@ -41,13 +42,24 @@ export default function Login() {
     password: "",
   });
 
-  function handleSubmit(event) {
+ async function handleSubmit(event) {
     event.preventDefault();
-    handleExistingUser(combinedState.email, combinedState.password);
+    returnResponse(await handleExistingUser(combinedState.email, combinedState.password));
   }
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
+  }
+
+  function returnResponse(response){
+    if (response.success) {
+      console.log("if everything is right = ", response.message)
+      console.log("let the see the toast =", toast.success(response.message))
+      toast.success(response.message)
+    }
+    else{
+      toast.error(response.message);
+    }
   }
 
   return (
@@ -114,8 +126,8 @@ export default function Login() {
          {/* Google login button */}
          <div className="flex h-[50px] justify-center">
           <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              handleGoogleLogin(credentialResponse.credential);
+            onSuccess={async (credentialResponse) => {
+             returnResponse(await handleGoogleLogin(credentialResponse.credential))
             }}
             onError={() => {
               console.log('Login Failed');

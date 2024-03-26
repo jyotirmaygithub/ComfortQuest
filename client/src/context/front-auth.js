@@ -34,8 +34,10 @@ async function handleCreateUser(name, email, password) {
       console.log("this is the authtoken = " + userAuth_Token);
       storeAuthToken(userAuth_Token);
     }
+    return { success: true, message: "Your Account has been created!" };
   } catch (error) {
     console.error("Error creating user:", error);
+    return { success: false, message: error.message };
   }
 }
 
@@ -60,8 +62,10 @@ async function handleExistingUser(email, password) {
       console.log("this is the authtoken = " + userAuth_Token);
       storeAuthToken(userAuth_Token);
     }
+    return { success: true, message: "Login successfully" };
   } catch (error) {
     console.error("Error creating user:", error);
+    return { success: false, message: error.message };
   }
 }
 
@@ -69,10 +73,10 @@ async function handleExistingUser(email, password) {
 async function handleGoogleLogin(credential) {
   const dataObject = jwtDecode(credential);
   console.log("dataobject values = ", dataObject);
-  handleGoogleUser(dataObject.email, dataObject.name)
+  return handleGoogleUser(dataObject.email, dataObject.name);
 }
 
-// Route 4 : handling google authenticating users. 
+// Route 4 : handling google authenticating users.
 async function handleGoogleUser(name, email) {
   try {
     const response = await fetch(
@@ -82,7 +86,7 @@ async function handleGoogleUser(name, email) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email}),
+        body: JSON.stringify({ name, email }),
       }
     );
     if (!response.ok) {
@@ -93,12 +97,12 @@ async function handleGoogleUser(name, email) {
       console.log("this is the authtoken = " + userAuth_Token);
       storeAuthToken(userAuth_Token);
     }
+    return { success: true, message: "Login successfully" };
   } catch (error) {
     console.error("Error creating user:", error);
+    return { success: false, message: error.message };
   }
 }
-
-
 
 export function AuthFunction(props) {
   return (

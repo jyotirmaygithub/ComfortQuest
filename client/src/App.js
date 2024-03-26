@@ -1,4 +1,6 @@
 import React from "react";
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/header";
@@ -22,6 +24,7 @@ function App() {
                 <Route exact path="*" element={<NotFoundPage />} />
               </Routes>
             </Router>
+            <ToastContainer autoClose={2000} transition={Slide} />
           </AuthFunction>
         </TokenStatusFunction>
       </GoogleOAuthProvider>
