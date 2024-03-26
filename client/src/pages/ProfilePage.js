@@ -12,17 +12,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import {TokenStatusContext} from "../context/tokenStatus"
 import { Toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { FrontAuthFunction } from "../context/front-auth";
 
 export default function ActionAreaCard() {
   const {checkCookie,deleteAuthTokenCookie} = TokenStatusContext();
+  const {handleExistingUserData} = FrontAuthFunction()
   const navigate = useNavigate()
-  
+
   function handleLogout(){
     deleteAuthTokenCookie()
     navigate("/")
   }
   function handleSubmit(){
-
+    handleExistingUserData()
   }
   return (
     <div className="flex justify-center items-center">
