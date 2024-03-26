@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+const fetchUserId = require("../middleware/fetchUserId")
 require("dotenv").config();
 
 const JWT_secret = process.env.HOTELS_JWT_SECRET;
@@ -20,7 +21,7 @@ function idObject(newUser) {
 
 // function : to generate random password for google-auth.
 function generateRandomPassword(length) {
-  const characters =process.env.PASSWORD_STRING;
+  const characters = process.env.PASSWORD_STRING;
 
   let password = "";
 
@@ -32,7 +33,6 @@ function generateRandomPassword(length) {
 
   return password;
 }
-
 
 //ROUTE 1 : creating an new user account POST : /api/auth/createuser
 router.post(
@@ -140,6 +140,19 @@ router.post("/google-auth", async (req, res) => {
     const data = idObject(userData);
     const auth_token = jwt.sign(data, JWT_secret);
     res.json({ auth_token });
+  } catch (error) {
+    // throw errors.
+    console.error(error.message);
+    res.status(500).send("Internal server Error Occured");
+  }
+});
+
+// Route 4 : to get entered user data :GET /api/auth/user-data.
+
+router.get("/user-data", fetchUserId, async (req, res) => {
+  try {
+    let userDocument = await user.findById({ _id : req.userId}).select("-password")
+    res.json({"user_data" : userDocument})
   } catch (error) {
     // throw errors.
     console.error(error.message);
