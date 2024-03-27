@@ -1,71 +1,87 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import MyStyledTextField from "../components/myStyledTextField";
 import { Logout } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
-import {TokenStatusContext} from "../context/tokenStatus"
+import { TokenStatusContext } from "../context/tokenStatus";
 import { Toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FrontAuthFunction } from "../context/front-auth";
+// import { FrontAuthFunction } from "../context/front-auth";
 import { StateContext } from "../context/States";
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
 export default function ActionAreaCard() {
-  const {checkCookie,deleteAuthTokenCookie,getAuthToken } = TokenStatusContext();
-  const {handleExistingUserData} = FrontAuthFunction()
-  // const {userDocument} = StateContext();
-  const navigate = useNavigate()
+  const { deleteAuthTokenCookie } = TokenStatusContext();
+  const navigate = useNavigate();
+  // const { handleExistingUserData } = FrontAuthFunction();
+  const { userDocument } = StateContext();
+  const { name, email, picture } = userDocument;
+  // To enable changing username at run time.
+  const [combinedState, setCombinedState] = useState({
+    username: name,
+  });
 
-  function handleLogout(){
-    deleteAuthTokenCookie()
-    navigate("/")
+  useEffect(()=>{
+    setCombinedState({username : name})
+  },[userDocument]);
+
+  function onchange(e) {
+    setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
   }
-  async function handleSubmit(){
-    handleExistingUserData()
-    // console.log("value of the user document = " + userDocument)
+
+  function handleLogout() {
+    deleteAuthTokenCookie();
+    navigate("/");
   }
+  function handleSubmit() {}
   return (
     <div className="flex justify-center items-center">
-      <Card className=" px-12 p-3">
+      <Card className="p-4">
         <CardActionArea className="flex-col justify-center">
-          <Stack direction="row" spacing={2}>
             <Avatar
               alt="profile picture"
-              src="https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png"
+              src={picture}
               sx={{ width: 250, height: 250 }}
             />
-          </Stack>
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
-              email id
+              {email ? email : ""}
             </Typography>
           </CardContent>
         </CardActionArea>
         <div className="flex-col justify-center py-4 space-y-2">
-        <MyStyledTextField
-          margin="normal"
-          required
-          fullWidth
-          id="name"
-          label="Username"
-          name="name"
-          autoComplete="name"
-          onChange={onchange}
-          autoFocus
-        />
-        <div  className='flex justify-between'>
-        <Button onClick={handleSubmit} variant="outlined" startIcon={<EditIcon />}>
-          Edit
-        </Button>
-        <Button onClick={handleLogout} variant="contained" startIcon={<Logout />}>
-          Logout
-        </Button>
-        </div>
+          <MyStyledTextField
+            margin="normal"
+            value={combinedState.username}
+            required
+            fullWidth
+            id="username"
+            name="username"
+            autoComplete="name"
+            onChange={onchange}
+            autoFocus
+          />
+          <div className="flex justify-between">
+            <Button
+              onClick={handleSubmit}
+              variant="outlined"
+              startIcon={<EditIcon />}
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={handleLogout}
+              variant="contained"
+              startIcon={<Logout />}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

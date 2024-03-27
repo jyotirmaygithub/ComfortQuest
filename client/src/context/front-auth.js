@@ -1,13 +1,19 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { TokenStatusContext } from "../context/tokenStatus";
+import { TokenStatusContext } from "./tokenStatus";
 import { StateContext } from "./States";
 
 const FrontAuthContext = createContext();
 
 export function AuthFunction(props) {
-  const { getAuthToken } = TokenStatusContext();
+  const { getAuthToken,checkCookie } = TokenStatusContext();
   const { setUserDocument } = StateContext();
+
+  useEffect(()=>{
+    if(checkCookie){
+      handleExistingUserData()
+    }
+  },[])
 
   // function  : To store auth token in the cookie..
   function storeAuthToken(userAuth_Token) {
@@ -129,9 +135,8 @@ export function AuthFunction(props) {
       const userData = await response.json();
       // storing userDocument into the context api state.
       if (userData) {
-        // setUserDocument(userData.user_data);
+        setUserDocument(userData.user_data);
       }
-      console.log("this is the userdata = ", userData);
     } catch (error) {
       console.error("Error creating user:", error.message);
     }
@@ -141,7 +146,7 @@ export function AuthFunction(props) {
     <FrontAuthContext.Provider
       value={{
         handleCreateUser,
-        handleExistingUser,
+        // handleExistingUser,
         handleGoogleLogin,
         handleExistingUserData,
       }}

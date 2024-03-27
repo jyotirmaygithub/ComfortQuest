@@ -3,9 +3,10 @@ import React, { useContext, createContext, useState } from "react";
 const AppStates = createContext();
 
 export function StatesFunction(props) {
-    // const [userDocument ,setUserDocument] = useState({})
+  // state to store user document from the database.
+  const [userDocument ,setUserDocument] = useState({})
   return (
-    <AppStates.Provider value={{  }}>
+    <AppStates.Provider value={{ userDocument,setUserDocument }}>
       {props.children}
     </AppStates.Provider>
   );

@@ -16,28 +16,27 @@ function App() {
   return (
     <>
       <GoogleOAuthProvider clientId={process.env.REACT_APP_AUTH_CLIENT_ID}>
-        <TokenStatusFunction>
-          <AuthFunction>
-            <StatesFunction>
+        <StatesFunction>
+          <TokenStatusFunction>
+            <AuthFunction>
               <Router>
                 <Routes>
                   <Route exact path="/" element={<Header />} />
                   <Route exact path="/login" element={<LoginPage />} />
                   <Route exact path="/signup" element={<SignUp />} />
-                  <Route exact path="*" element={<NotFoundPage />} />
                   <Route
                     exact
                     path="/account/edit-profile"
                     element={<ProfilePage />}
                   />
+                  <Route exact path="*" element={<NotFoundPage />} />
                 </Routes>
               </Router>
-            </StatesFunction>
-            <ToastContainer autoClose={2000} transition={Slide} />
-          </AuthFunction>
-        </TokenStatusFunction>
+              <ToastContainer autoClose={2000} transition={Slide} />
+            </AuthFunction>
+          </TokenStatusFunction>
+        </StatesFunction>
       </GoogleOAuthProvider>
-      ;
     </>
   );
 }
