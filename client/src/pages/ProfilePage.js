@@ -13,18 +13,21 @@ import {TokenStatusContext} from "../context/tokenStatus"
 import { Toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FrontAuthFunction } from "../context/front-auth";
+import { StateContext } from "../context/States";
 
 export default function ActionAreaCard() {
-  const {checkCookie,deleteAuthTokenCookie} = TokenStatusContext();
+  const {checkCookie,deleteAuthTokenCookie,getAuthToken } = TokenStatusContext();
   const {handleExistingUserData} = FrontAuthFunction()
+  // const {userDocument} = StateContext();
   const navigate = useNavigate()
 
   function handleLogout(){
     deleteAuthTokenCookie()
     navigate("/")
   }
-  function handleSubmit(){
+  async function handleSubmit(){
     handleExistingUserData()
+    // console.log("value of the user document = " + userDocument)
   }
   return (
     <div className="flex justify-center items-center">

@@ -1,11 +1,13 @@
 import React, { useContext, createContext } from "react";
 import { jwtDecode } from "jwt-decode";
 import { TokenStatusContext } from "../context/tokenStatus";
+import { StateContext } from "./States";
 
 const FrontAuthContext = createContext();
 
 export function AuthFunction(props) {
   const { getAuthToken } = TokenStatusContext();
+  const { setUserDocument } = StateContext();
 
   // function  : To store auth token in the cookie..
   function storeAuthToken(userAuth_Token) {
@@ -77,7 +79,7 @@ export function AuthFunction(props) {
   async function handleGoogleLogin(credential) {
     const dataObject = jwtDecode(credential);
     console.log("dataobject values = ", dataObject);
-    return handleGoogleUser(dataObject.email, dataObject.name);
+    return handleGoogleUser(dataObject.name, dataObject.email);
   }
 
   // Route 4 : handling google authenticating users.
@@ -117,18 +119,21 @@ export function AuthFunction(props) {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "auth-token": getAuthToken()
+            "auth-token": getAuthToken(),
           },
         }
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      return await response;
-      // return { success: true, message: "Login successfully" };
+      const userData = await response.json();
+      // storing userDocument into the context api state.
+      if (userData) {
+        // setUserDocument(userData.user_data);
+      }
+      console.log("this is the userdata = ", userData);
     } catch (error) {
-      console.error("Error creating user:", error);
-      return { success: false, message: error.message };
+      console.error("Error creating user:", error.message);
     }
   }
 
