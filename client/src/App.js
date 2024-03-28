@@ -12,6 +12,8 @@ import { TokenStatusFunction } from "./context/tokenStatus";
 import ProfilePage from "./pages/ProfilePage";
 import { StatesFunction } from "./context/States";
 import { HotelContextFunc } from "./context/HotelsContext";
+import Hotels from "./pages/Hotels/Hotels";
+import HotelLayout from "./pages/Hotels/hotelLayout";
 
 function App() {
   return (
@@ -23,7 +25,7 @@ function App() {
               <HotelContextFunc>
                 <Router>
                   <Routes>
-                    <Route exact path="/" element={<Header />} />
+                    <Route exact path="/" element={<HotelLayout />} />
                     <Route exact path="/login" element={<LoginPage />} />
                     <Route exact path="/signup" element={<SignUp />} />
                     <Route

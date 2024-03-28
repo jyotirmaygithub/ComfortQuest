@@ -28,13 +28,12 @@ export function HotelContextFunc(props) {
       if(Hotels){
         setHotelData(Hotels.hotels)
       }
-      console.log("let see hotel data = ",Hotels.hotels)
     } catch (error) {
       console.error("Error creating user:", error.message);
     }
   }
   return (
-    <Hotels.Provider value={{ hotelData, }}>
+    <Hotels.Provider value={{ hotelData }}>
       {props.children}
     </Hotels.Provider>
   );
