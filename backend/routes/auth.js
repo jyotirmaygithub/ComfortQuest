@@ -4,17 +4,34 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+const fetchUserId = require("../middleware/fetchUserId")
 require("dotenv").config();
 
-const JWT_secret = process.env.HOTELS_JWT_SECRET
+const JWT_secret = process.env.HOTELS_JWT_SECRET;
 
-function idObject(newUser){
+// function : object which carries id of the user document.
+function idObject(newUser) {
   const data = {
     newUser: {
       id: newUser.id,
     },
   };
   return data;
+}
+
+// function : to generate random password for google-auth.
+function generateRandomPassword(length) {
+  const characters = process.env.PASSWORD_STRING;
+
+  let password = "";
+
+  // Generate random characters to create the password
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters[randomIndex];
+  }
+
+  return password;
 }
 
 //ROUTE 1 : creating an new user account POST : /api/auth/createuser
@@ -32,7 +49,10 @@ router.post(
     // Validation function to check inputs.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() ,message : "Name, email and password are required" });
+      return res.status(400).json({
+        errors: errors.array(),
+        message: "Name, email and password are required",
+      });
     }
     try {
       // CHECK 2 : dont want two or more user of same email id.
@@ -103,4 +123,41 @@ router.post(
   }
 );
 
-module.exports = router; 
+// Route 3 : google authentication : POST /api/auth/google-auth.
+
+router.post("/google-auth", async (req, res) => {
+  const { name, email } = req.body;
+  try {
+    let userData = await user.findOne({ email });
+    if (!userData) {
+      const password = generateRandomPassword(20);
+      userData = await user.create({
+        name: name,
+        email: email,
+        password: password,
+      });
+    }
+    const data = idObject(userData);
+    const auth_token = jwt.sign(data, JWT_secret);
+    res.json({ auth_token });
+  } catch (error) {
+    // throw errors.
+    console.error(error.message);
+    res.status(500).send("Internal server Error Occured");
+  }
+});
+
+// Route 4 : to get entered user data :GET /api/auth/user-data.
+
+router.get("/user-data", fetchUserId, async (req, res) => {
+  try {
+    let userDocument = await user.findById({ _id : req.userId}).select("-password")
+    res.json({"user_data" : userDocument})
+  } catch (error) {
+    // throw errors.
+    console.error(error.message);
+    res.status(500).send("Internal server Error Occured");
+  }
+});
+
+module.exports = router;
