@@ -11,20 +11,21 @@ import EditIcon from "@mui/icons-material/Edit";
 import { TokenStatusContext } from "../context/tokenStatus";
 import { Toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import { FrontAuthFunction } from "../context/front-auth";
+import { FrontAuthFunction } from "../context/front-auth";
 import { StateContext } from "../context/States";
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 
 export default function ActionAreaCard() {
   const { deleteAuthTokenCookie } = TokenStatusContext();
   const navigate = useNavigate();
-  // const { handleExistingUserData } = FrontAuthFunction();
+  const { handleEditProfile } = FrontAuthFunction();
   const { userDocument } = StateContext();
   const { name, email, picture } = userDocument;
   // To enable changing username at run time.
   const [combinedState, setCombinedState] = useState({
     username: name,
   });
+  let newUserPicture = null
 
   useEffect(()=>{
     setCombinedState({username : name})
@@ -38,7 +39,9 @@ export default function ActionAreaCard() {
     deleteAuthTokenCookie();
     navigate("/");
   }
-  function handleSubmit() {}
+  function handleSubmit() {
+    handleEditProfile(combinedState.username ,newUserPicture)
+  }
   return (
     <div className="flex justify-center items-center">
       <Card className="p-4">
@@ -74,6 +77,7 @@ export default function ActionAreaCard() {
             >
               Edit
             </Button>
+            {/* <input type="file" onChange={todealwithimage} /> */}
             <Button
               onClick={handleLogout}
               variant="contained"
