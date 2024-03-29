@@ -13,7 +13,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FrontAuthFunction } from "../context/front-auth";
 import { StateContext } from "../context/States";
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
+import ProfilePopUp from "../components/Profile-Pop-up/ProfilePop";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
+import DialogContentText from "@mui/material/DialogContentText";
 
 export default function ActionAreaCard() {
   const { deleteAuthTokenCookie } = TokenStatusContext();
@@ -25,11 +29,13 @@ export default function ActionAreaCard() {
   const [combinedState, setCombinedState] = useState({
     username: name,
   });
-  let newUserPicture =  "C:/Users/jyotirmay gupta/Pictures/village/DSC02131.ARW"
+  const [popUp, setPopUp] = useState(false);
+  let newUserPicture =
+    "C:/Users/jyotirmay gupta/Pictures/hostel fuck up/IMG_20230225_234354.jpg";
 
-  useEffect(()=>{
-    setCombinedState({username : name})
-  },[userDocument]);
+  useEffect(() => {
+    setCombinedState({ username: name });
+  }, [userDocument]);
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
@@ -40,63 +46,63 @@ export default function ActionAreaCard() {
     navigate("/");
   }
   async function handleSubmit() {
-    returnResponse( await handleEditProfile(combinedState.username ,newUserPicture))
+    setPopUp(true);
+    // returnResponse( await handleEditProfile(combinedState.username ,newUserPicture))
   }
-  function returnResponse(response){
-    console.log("what is response = " , response)
+  function returnResponse(response) {
+    console.log("what is response = ", response);
     if (response.success) {
-      toast.success(response.message)
-      navigate('/')
-    }
-    else{
+      toast.success(response.message);
+      navigate("/");
+    } else {
       toast.error(response.message);
     }
   }
 
   return (
     <div className="flex justify-center items-center">
-      <Card className="p-4">
+      <Card className="p-2">
         <CardActionArea className="flex-col justify-center">
-            <Avatar
-              alt="profile picture"
-              src={picture}
-              sx={{ width: 250, height: 250 }}
-            />
+          <Avatar
+            alt="profile picture"
+            src={picture}
+            sx={{ width: 250, height: 250 }}
+          />
           <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
+            <Typography
+              startIcon={<EmailOutlinedIcon />}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
               {email ? email : ""}
+            </Typography>
+            <Typography
+              startIcon={<EmailOutlinedIcon />}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
+              {name ? name : ""}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <div className="flex-col justify-center py-4 space-y-2">
-          <MyStyledTextField
-            margin="normal"
-            value={combinedState.username}
-            required
-            fullWidth
-            id="username"
-            name="username"
-            autoComplete="name"
-            onChange={onchange}
-            autoFocus
-          />
-          <div className="flex justify-between">
-            <Button
-              onClick={handleSubmit}
-              variant="outlined"
-              startIcon={<EditIcon />}
-            >
-              Edit
-            </Button>
-            {/* <input type="file" onChange={todealwithimage} /> */}
-            <Button
-              onClick={handleLogout}
-              variant="contained"
-              startIcon={<Logout />}
-            >
-              Logout
-            </Button>
-          </div>
+        <div className="flex justify-between gap-8">
+          <Button
+            onClick={handleSubmit}
+            variant="outlined"
+            startIcon={<EditIcon />}
+          >
+            Edit Profile
+          </Button>
+          <ProfilePopUp open={popUp} openState={setPopUp} />
+          <Button
+            onClick={handleLogout}
+            variant="contained"
+            startIcon={<Logout />}
+          >
+            Logout
+          </Button>
         </div>
       </Card>
     </div>
