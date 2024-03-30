@@ -142,36 +142,14 @@ export function AuthFunction(props) {
     }
   }
 
-  // Route 6 : To edit the profile of the user.
-  async function handleEditProfile(name, picture) {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_DEV_URL}/api/editProfile/edit-profile`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": getAuthToken(),
-          },
-          body: JSON.stringify({ name, picture }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return { success: true, message: "Profile has been updated!" };
-    } catch (error) {
-      console.error("Error creating user:", error.message);
-      return { success: false, message: error.message };
-    }
-  }
+
 
   return (
     <FrontAuthContext.Provider
       value={{
         handleCreateUser,
         handleExistingUser,
-        handleEditProfile,
+        // handleEditProfile,
         handleGoogleLogin,
         handleExistingUserData,
       }}

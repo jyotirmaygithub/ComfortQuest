@@ -14,6 +14,7 @@ import { StatesFunction } from "./context/States";
 import { HotelContextFunc } from "./context/HotelsContext";
 import Hotels from "./pages/Hotels/Hotels";
 import HotelLayout from "./pages/Hotels/hotelLayout";
+import { EditProfileContextFunc } from "./context/EditProfile";
 
 function App() {
   return (
@@ -23,19 +24,21 @@ function App() {
           <TokenStatusFunction>
             <AuthFunction>
               <HotelContextFunc>
-                <Router>
-                  <Routes>
-                    <Route exact path="/" element={<HotelLayout />} />
-                    <Route exact path="/login" element={<LoginPage />} />
-                    <Route exact path="/signup" element={<SignUp />} />
-                    <Route
-                      exact
-                      path="/account/edit-profile"
-                      element={<ProfilePage />}
-                    />
-                    <Route exact path="*" element={<NotFoundPage />} />
-                  </Routes>
-                </Router>
+                <EditProfileContextFunc>
+                  <Router>
+                    <Routes>
+                      <Route exact path="/" element={<HotelLayout />} />
+                      <Route exact path="/login" element={<LoginPage />} />
+                      <Route exact path="/signup" element={<SignUp />} />
+                      <Route
+                        exact
+                        path="/account/edit-profile"
+                        element={<ProfilePage />}
+                      />
+                      <Route exact path="*" element={<NotFoundPage />} />
+                    </Routes>
+                  </Router>
+                </EditProfileContextFunc>
               </HotelContextFunc>
               <ToastContainer autoClose={2000} transition={Slide} />
             </AuthFunction>
