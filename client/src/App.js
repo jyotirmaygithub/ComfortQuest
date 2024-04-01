@@ -12,10 +12,10 @@ import { TokenStatusFunction } from "./context/tokenStatus";
 import ProfilePage from "./pages/ProfilePage";
 import { StatesFunction } from "./context/States";
 import { HotelContextFunc } from "./context/HotelsContext";
-import Hotels from "./pages/Hotels/Hotels";
-import HotelLayout from "./pages/Hotels/hotelLayout";
+import Hotels from "./pages/Hotels";
 import { EditProfileContextFunc } from "./context/EditProfile";
-import CircleProgress from "./pages/CircleProgress"
+import CircleProgress from "./pages/CircleProgress";
+import FrontPage from "./Layout/FrontPage";
 
 function App() {
   return (
@@ -28,8 +28,12 @@ function App() {
                 <EditProfileContextFunc>
                   <Router>
                     <Routes>
-                      <Route exact path="/" element={<HotelLayout />} />
-                      <Route exact path="/fetching-data" element={<CircleProgress />} />
+                      <Route exact path="/" element={<FrontPage />} />
+                      <Route
+                        exact
+                        path="/fetching-data"
+                        element={<CircleProgress />}
+                      />
                       <Route exact path="/login" element={<LoginPage />} />
                       <Route exact path="/signup" element={<SignUp />} />
                       <Route

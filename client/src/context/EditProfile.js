@@ -50,7 +50,7 @@ export function EditProfileContextFunc(props) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       console.log("what we got in response", response);
-      return response;
+      return { success: true, message: "profile updated successfully" };
     } catch (error) {
       console.error("Error creating user:", error.message);
       return { success: false, message: error.message };

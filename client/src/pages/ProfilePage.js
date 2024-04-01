@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { StateContext } from "../context/States";
 import ProfilePopUp from "../components/Profile-Pop-up/ProfilePop";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import Progress from  "../components/Progress";
 
 export default function ActionAreaCard() {
   const { deleteAuthTokenCookie } = TokenStatusContext();

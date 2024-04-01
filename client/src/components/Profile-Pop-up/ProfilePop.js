@@ -10,9 +10,11 @@ import Avatar from "@mui/material/Avatar";
 import { StateContext } from "../../context/States";
 import { toast } from "react-toastify";
 import { EditProfileContext } from "../../context/EditProfile";
+import {FrontAuthContext} from "../../context/front-auth"
 
 export default function FormDialog({ open, openState }) {
   const { userDocument } = StateContext();
+  const {handleExistingUserData} = FrontAuthContext()
   const { name, picture } = userDocument;
   const [selectedFile, setSelectedFile] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -38,8 +40,9 @@ export default function FormDialog({ open, openState }) {
     openState(false);
     let imageURL = await saveImage(userImage);
     console.log("response = ", imageURL);
-    let waiting = await handleEditProfile(userName, imageURL);
+    let waiting = returnResponse(await handleEditProfile(userName, imageURL));
     console.log("reply of the waiting = ", waiting);
+    handleExistingUserData()
   }
   function returnResponse(response) {
     console.log("what is response = ", response);
@@ -54,7 +57,8 @@ export default function FormDialog({ open, openState }) {
       <DialogTitle id="form-dialog-title">Edit Your Profile</DialogTitle>
       <DialogContent className="space-y-4">
         <DialogContentText>
-          Edit and elevate your existing notes effortlessly in the NoteVault app
+          {" "}
+          Click the image below to update your profile picture.{" "}
         </DialogContentText>
         <label htmlFor="avatarInput" className="cursor-pointer">
           <Avatar
@@ -82,7 +86,10 @@ export default function FormDialog({ open, openState }) {
             }
           }}
         />
-
+         <DialogContentText>
+          {" "}
+          Update User Name.{" "}
+        </DialogContentText>
         <MyStyledTextField
           margin="normal"
           value={userName}
