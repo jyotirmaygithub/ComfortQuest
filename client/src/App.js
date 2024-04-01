@@ -15,6 +15,7 @@ import { HotelContextFunc } from "./context/HotelsContext";
 import Hotels from "./pages/Hotels/Hotels";
 import HotelLayout from "./pages/Hotels/hotelLayout";
 import { EditProfileContextFunc } from "./context/EditProfile";
+import CircleProgress from "./pages/CircleProgress"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                   <Router>
                     <Routes>
                       <Route exact path="/" element={<HotelLayout />} />
+                      <Route exact path="/fetching-data" element={<CircleProgress />} />
                       <Route exact path="/login" element={<LoginPage />} />
                       <Route exact path="/signup" element={<SignUp />} />
                       <Route
