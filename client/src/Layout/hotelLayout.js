@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { HotelContext } from "../context/HotelsContext";
 
 export default function HotelLayout(HotelData) {
   const navigate = useNavigate();
+  const {handleSingleHotel} = HotelContext()
   console.log("hotel data", HotelData.HotelData);
   let {
+    _id,
     hotel_name,
     city,
     country,
@@ -13,10 +16,10 @@ export default function HotelLayout(HotelData) {
     rates_currency,
     rates_from,
   } = HotelData.HotelData;
-  console.log("images = ", country);
 
   function handleHotel(){
-    navigate('')
+    handleSingleHotel(_id)
+    navigate(`/hotel/${_id}`)
   }
   return (
     <section className="py-20" onClick={handleHotel}>
