@@ -1,36 +1,39 @@
-import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { differenceInDays } from 'date-fns';
-import { toast } from 'react-toastify';
-import DatePicker from "./DatePicker"
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { differenceInDays } from "date-fns";
+import { toast } from "react-toastify";
+import DatePicker from "./DatePicker";
+import MyStyledTextField from "./myStyledTextField";
+import { StateContext } from "../context/States";
+import { TokenStatusContext } from "../context/tokenStatus";
+import { HotelContext } from "../context/HotelsContext";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-// import DatePickerWithRange from './DatePickerWithRange';
-
-const BookingWidget = ({ price }) => {
-    console.log("price of the hotel = ",price)
-  const [dateRange, setDateRange] = useState({ from: null, to: null });
+const BookingWidget = ({ price, numberOfRooms, Hotel, Address }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { checkIn, checkOut,userDocument } = StateContext();
+  const { checkCookie } = TokenStatusContext();
+  const { handleHotelBooking } = HotelContext();
   const [bookingData, setBookingData] = useState({
-    noOfGuests: 1,
-    name: '',
-    phone: '',
+    noOfRooms: 1,
+    name: "",
+    phone: "",
   });
-
-  const { noOfGuests, name, phone } = bookingData;
-//   const { _id: id, price } = place;
-
+  console.log("checkout date =", checkOut);
+  const [days, setDays] = useState(0);
+  const [month, setMonths] = useState(0);
+  const [year, setYear] = useState(0);
+console.log(userDocument.email)
+  // To control the number of dates of booking.
   useEffect(() => {
-    // if (user) {
-    //   setBookingData({ ...bookingData, name: user.name });
-    // }
-  }, []);
-
-  const numberOfNights =
-    dateRange.from && dateRange.to
-      ? differenceInDays(
-          new Date(dateRange.to).setHours(0, 0, 0, 0),
-          new Date(dateRange.from).setHours(0, 0, 0, 0),
-        )
-      : 0;
+    if (checkIn && checkOut) {
+      setDays(Math.abs(checkOut.$D - checkIn.$D));
+      setMonths(Math.abs(checkOut.$M - checkIn.$M));
+      setYear(Math.abs(checkOut.$Y - checkIn.$Y));
+    }
+  }, [checkIn, checkOut]);
 
   // handle booking form
   const handleBookingData = (e) => {
@@ -39,47 +42,36 @@ const BookingWidget = ({ price }) => {
       [e.target.name]: e.target.value,
     });
   };
+  async function handleBooking() {
+    // User must be signed in to book place
+    if (!checkCookie()) {
+      toast.error("First Login In");
+      navigate("/login");
+    }
 
-//   const handleBooking = async () => {
-//     // User must be signed in to book place
-//     // if (!user) {
-//     //   return setRedirect(`/login`);
-//     // }
-
-//     // BOOKING DATA VALIDATION
-//     if (numberOfNights < 1) {
-//       return toast.error('Please select valid dates');
-//     } else if (noOfGuests < 1) {
-//       return toast.error("No. of guests can't be less than 1");
-//     } else if (noOfGuests > place.maxGuests) {
-//       return toast.error(`Allowed max. no. of guests: ${place.maxGuests}`);
-//     } else if (name.trim() === '') {
-//       return toast.error("Name can't be empty");
-//     } else if (phone.trim() === '') {
-//       return toast.error("Phone can't be empty");
-//     }
-
-//     try {
-//       const response = await axiosInstance.post('/bookings', {
-//         checkIn: dateRange.from,
-//         checkOut: dateRange.to,
-//         noOfGuests,
-//         name,
-//         phone,
-//         place: id,
-//         price: numberOfNights * price,
-//       });
-
-//       const bookingId = response.data.booking._id;
-
-//       setRedirect(`/account/bookings/${bookingId}`);
-//       toast('Congratulations! Enjoy your trip.');
-//     } catch (error) {
-//       toast.error('Something went wrong!');
-//       console.log('Error: ', error);
-//     }
-//   };
-
+    // BOOKING DATA VALIDATION
+    if (days < 1 && month > 1 && year === 0) {
+      return toast.error("Please select valid dates");
+    } else if (bookingData.noOfGuests < 1) {
+      return toast.error("No. of guests can't be less than 1");
+    } else if (bookingData.noOfRooms > 20) {
+      return toast.error(`Allowed max. no. of rooms: ${20}`);
+    } else if (bookingData.name.trim() === "") {
+      return toast.error("Name can't be empty");
+    } else if (bookingData.phone.trim() === "") {
+      return toast.error("Phone can't be empty");
+    }
+    returnResponse(handleHotelBooking(id,userDocument.email,Hotel,Address,price,checkIn, checkOut, bookingData.name, bookingData.phone));
+  }
+  function returnResponse(response){
+    if (response.success) {
+      toast.success(response.message)
+      // navigate('/')
+    }
+    else{
+      toast.error(response.message);
+    }
+  }
   return (
     <div className="rounded-2xl bg-white p-4 shadow-xl">
       <div className="text-center text-xl">
@@ -87,40 +79,50 @@ const BookingWidget = ({ price }) => {
       </div>
       <div className="mt-4 rounded-2xl border">
         <div className="flex w-full ">
-          <DatePicker  />
+          <DatePicker />
         </div>
         <div className="border-t py-3 px-4">
-          <label>Number of guests: </label>
-          <input
-            type="number"
-            name="noOfGuests"
-            // placeholder={`Max. guests: ${place.maxGuests}`}
-            min={1}
-            // max={place.maxGuests}
-            value={noOfGuests}
+          <label>Number of Rooms</label>
+          <MyStyledTextField
+            margin="normal"
+            required
+            fullWidth
+            id="noOfRooms"
+            name="noOfRooms"
+            value={bookingData.noOfRooms}
+            autoComplete="Rooms"
             onChange={handleBookingData}
+            autoFocus
           />
         </div>
         <div className="border-t py-3 px-4">
-          <label>Your full name: </label>
-          <input
-            type="text"
+          <MyStyledTextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Full Name"
             name="name"
-            value={name}
+            autoComplete="name"
             onChange={handleBookingData}
+            autoFocus
           />
-          <label>Phone number: </label>
-          <input
-            type="tel"
+          <MyStyledTextField
+            margin="normal"
+            required
+            fullWidth
+            id="phone"
+            label="Phone Number"
             name="phone"
-            value={phone}
+            autoComplete="phone"
             onChange={handleBookingData}
+            autoFocus
           />
         </div>
       </div>
-      <button onClick={""} className="primary mt-4">
+      <button onClick={handleBooking} className=" bg-gray-400 mt-4">
         Book this place
-        {numberOfNights > 0 && <span> ₹{numberOfNights * price}</span>}
+        {days > 0 && <span> ₹{days * price}</span>}
       </button>
     </div>
   );
