@@ -5,7 +5,6 @@ import { HotelContext } from "../context/HotelsContext";
 export default function HotelLayout(HotelData) {
   const navigate = useNavigate();
   const {handleSingleHotel} = HotelContext()
-  console.log("hotel data", HotelData.HotelData);
   let {
     _id,
     hotel_name,

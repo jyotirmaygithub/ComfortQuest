@@ -16,6 +16,7 @@ import Hotels from "./pages/Hotels";
 import { EditProfileContextFunc } from "./context/EditProfile";
 import CircleProgress from "./pages/CircleProgress";
 import FrontPage from "./Layout/FrontPage";
+import HotelDetails from "./pages/HotelDetails";
 
 function App() {
   return (
@@ -40,6 +41,11 @@ function App() {
                         exact
                         path="/account/edit-profile"
                         element={<ProfilePage />}
+                      />
+                      <Route
+                        exact
+                        path="/hotel/:id"
+                        element={<HotelDetails />}
                       />
                       <Route exact path="*" element={<NotFoundPage />} />
                     </Routes>

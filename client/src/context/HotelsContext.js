@@ -1,8 +1,10 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
+import { TokenStatusContext } from "./tokenStatus";
 
 const Hotels = createContext();
 
 export function HotelContextFunc(props) {
+  const { getAuthToken } = TokenStatusContext();
     useEffect(()=>{
         handleHotelData()
     },[])
@@ -28,8 +30,7 @@ export function HotelContextFunc(props) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const hotelData = await response.json();
-      console.log("single hotel Data : ", hotelData.HotelData);
-      setSingleHotel(hotelData);
+      setSingleHotel(hotelData.HotelData);
     } catch (error) {
       console.error("Error creating user:", error.message);
     }
@@ -59,8 +60,32 @@ export function HotelContextFunc(props) {
     }
   }
 
+  // Route 3 : Hotel booking.
+  async function  handleHotelBooking(hotelId,userEmail,Hotel,Address,price,checkIn, checkOut, userFullName, userPhoneNumber) {
+    console.log("user booking details = ",hotelId,userEmail,Hotel,Address,price,checkIn, checkOut, userFullName, userPhoneNumber)
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DEV_URL}/api/booking/booking`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": getAuthToken(),
+          },
+          body : JSON.stringify({hotelId,userEmail,Hotel,Address,price,checkIn, checkOut, userFullName, userPhoneNumber})
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return { success: true, message: "Congratulation you have successfully booked the hotel!" };
+    } catch (error) {
+      console.error("Error creating user:", error.message);
+      return { success: false, message: "Internal Server Error" };
+    }
+  }
   return (
-    <Hotels.Provider value={{ hotelData,handleSingleHotel,singleHotel }}>
+    <Hotels.Provider value={{ hotelData,handleSingleHotel,singleHotel,handleHotelBooking }}>
       {props.children}
     </Hotels.Provider>
   );
