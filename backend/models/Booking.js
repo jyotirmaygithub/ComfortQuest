@@ -7,25 +7,37 @@ const bookingSchema = new Schema({
         ref : "user",
         required : true,
     },
-    // place :{
-    //     type : mongoose.Schema.Types.ObjectId,
-    //     ref : "place",
-    //     required : true,
-    // },
+    hotel_id : {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref : "user",
+        required : true,
+    },
+    user_email: {
+        type : String,
+        required : true,
+    },
+    user_name: {
+        type : String,
+        required : true,
+    },
+    user_phone: {
+        type : Number,
+        required : true,
+    },
+    hotel_name: {
+        type : String,
+        required : true,
+    },
+    address: {
+        type : String,
+        required : true,
+    },
     checkIn : {
         type : Date,
         required : true,
     },
     checkOut : {
         type : Date,
-        required : true,
-    },
-    name : {
-        type : String,
-        required : true,
-    },
-    phone : {
-        type : Number,
         required : true,
     },
     price : {

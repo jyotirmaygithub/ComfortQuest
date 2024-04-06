@@ -1,5 +1,4 @@
 const express = require("express");
-const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const fetchUserId = require("../middleware/fetchUserId");
 const Booking = require("../models/Booking");
@@ -8,35 +7,25 @@ require("dotenv").config();
 
 router.post(
   "/booking",
-  [
-    // Check : for the validation of the inputs.
-    body("checkIn", "Enter your check-in date"),
-    body("checkOut", "Enter your check-out date"),
-    body("name", "Enter a valid last name").isLength({ max: 50 }),
-    body("phone", "Enter a valid phone number").isMobilePhone(),
-    body("price", "Enter a valid price").isNumeric().toFloat(),
-  ], fetchUserId,
+  fetchUserId,
   async (req, res) => {
-    // Validation function to check inputs.
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res
-        .status(400)
-        .json({ errors: errors.array(), message: "Enteries are required!" });
-    }
+    const {hotelId,userEmail,Hotel,Address,Price,checkIn, checkOut, userFullName, userPhoneNumber} = req.body
+    // console.log("to see data = ",hotelId,userEmail,Hotel,Address,Price,checkIn, checkOut, userFullName, userPhoneNumber)
     try {
-        let {checkIn,checkOut,name,phone,price} = req.body
-      // CHECK 2 : dont want two or more user of same email id.
-       let data = await Booking.create({
+       await Booking.create({
         user_id : req.userId,
-        // place : "something",
+        hotel_id: hotelId ,
+        user_email: userEmail,
+        user_name : userFullName ,
+        user_phone : userPhoneNumber,
+        hotel_name: Hotel,
+        address: Address,
         checkIn : checkIn,
         checkOut : checkOut,
-        name : name ,
-        phone : phone,
-        price : price
+        price: parseInt(Price),
       })
-      res.json({userDetails : data, msg : "user entered its details" });
+      // console.log("data = ",data)
+      res.json({msg : "user entered its details" });
     } catch (error) {
       // throw errors.
       console.error(error.message);
