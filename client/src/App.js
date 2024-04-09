@@ -17,6 +17,7 @@ import { EditProfileContextFunc } from "./context/EditProfile";
 import CircleProgress from "./pages/CircleProgress";
 import FrontPage from "./Layout/FrontPage";
 import HotelDetails from "./pages/HotelDetails";
+import ShowProfile from "./pages/ShowProfile"
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                       />
                       <Route exact path="/login" element={<LoginPage />} />
                       <Route exact path="/signup" element={<SignUp />} />
+                      <Route exact path="/account/:name" element={<ShowProfile />} />
                       <Route
                         exact
                         path="/account/edit-profile"

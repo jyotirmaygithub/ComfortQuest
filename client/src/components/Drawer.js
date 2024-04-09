@@ -35,7 +35,7 @@ export default function AnchorTemporaryDrawer() {
       deleteAuthTokenCookie();
       navigate(`/login`);
     } else if (value === "Profile") {
-      navigate(`/account/edit-profile`);
+      navigate(`/account/${userDocument.name}`);
     } else {
       navigate(`/${value}`);
     }
@@ -52,6 +52,14 @@ export default function AnchorTemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <div className="grid justify-center items-center my-2 space-y-2">
+      <Avatar
+        src={userDocument.picture}
+        sx={{ width: 150, height: 150 }}
+        alt="User Avatar"
+      />
+      <Button variant="contained" onClick={(e)=>handleClick(("Profile"))}>Edit Profile</Button>
+      </div>
       <List>
         {["Profile", "Bookings", "Accommodation"].map((text, index) => (
           <ListItem key={text} disablePadding onClick={() => handleClick(text)}>
