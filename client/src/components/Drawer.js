@@ -34,8 +34,14 @@ export default function AnchorTemporaryDrawer() {
     if (value === "Logout") {
       deleteAuthTokenCookie();
       navigate(`/login`);
-    } else if (value === "Profile") {
+    } else if (value === "View Profile") {
       navigate(`/account/${userDocument.name}`);
+    } else if (value === "editProfile") {
+      navigate(`/account/edit-profile`);
+    } else if (value === "Bookings") {
+      navigate(`/booking/${userDocument.name}`);
+    } else if (value === "Accommodation") {
+      navigate(`/Accommodation/${userDocument.name}`);
     } else {
       navigate(`/${value}`);
     }
@@ -53,15 +59,17 @@ export default function AnchorTemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <div className="grid justify-center items-center my-2 space-y-2">
-      <Avatar
-        src={userDocument.picture}
-        sx={{ width: 150, height: 150 }}
-        alt="User Avatar"
-      />
-      <Button variant="contained" onClick={(e)=>handleClick(("Profile"))}>Edit Profile</Button>
+        <Avatar
+          src={userDocument.picture}
+          sx={{ width: 150, height: 150 }}
+          alt="User Avatar"
+        />
+        <Button variant="contained" onClick={(e) => handleClick("editProfile")}>
+          Edit Profile
+        </Button>
       </div>
       <List>
-        {["Profile", "Bookings", "Accommodation"].map((text, index) => (
+        {["View Profile", "Bookings", "Accommodation"].map((text, index) => (
           <ListItem key={text} disablePadding onClick={() => handleClick(text)}>
             <ListItemButton>
               <ListItemIcon>{icons[index % iconCount]}</ListItemIcon>

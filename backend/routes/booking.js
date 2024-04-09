@@ -9,8 +9,8 @@ router.post(
   "/booking",
   fetchUserId,
   async (req, res) => {
-    const {hotelId,userEmail,Hotel,Address,Price,checkIn, checkOut, userFullName, userPhoneNumber} = req.body
-    // console.log("to see data = ",hotelId,userEmail,Hotel,Address,Price,checkIn, checkOut, userFullName, userPhoneNumber)
+    const {hotelId,userEmail,Hotel,Address,price,checkIn, checkOut, userFullName, userPhoneNumber} = req.body
+    console.log("to see data = ",hotelId,userEmail,Hotel,Address,price,checkIn, checkOut, userFullName, userPhoneNumber)
     try {
        await Booking.create({
         user_id : req.userId,
@@ -22,10 +22,10 @@ router.post(
         address: Address,
         checkIn : checkIn,
         checkOut : checkOut,
-        price: parseInt(Price),
+        price: price,
       })
       // console.log("data = ",data)
-      res.json({msg : "user entered its details" });
+      res.json({msg : "user entered its booking details successfully!" });
     } catch (error) {
       // throw errors.
       console.error(error.message);

@@ -5,7 +5,7 @@ import { HotelContext } from "../context/HotelsContext";
 export default function HotelLayout(HotelData) {
   const navigate = useNavigate();
   const {handleSingleHotel} = HotelContext()
-  let {
+  const {
     _id,
     hotel_name,
     city,
@@ -21,11 +21,11 @@ export default function HotelLayout(HotelData) {
     navigate(`/hotel/${_id}`)
   }
   return (
-    <section className="py-20" onClick={handleHotel}>
-      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl">
+    <section className="my-5" onClick={handleHotel}>
+      <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl w-[400px] h-[350px]">
         {/* <a href="#"> */}
-        <div className="relative flex items-end overflow-hidden rounded-xl">
-          <img src={photo1} alt="Hotel Photo" />
+        <div className="relative flex items-end overflow-hidden rounded-xl h-[200px]">
+          <img src={photo1} alt="Hotel Photo" className="w-screen" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"

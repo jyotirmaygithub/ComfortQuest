@@ -2,8 +2,8 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchBar from "./searchBar";
 import { useNavigate } from "react-router-dom";
-import  Popover  from  "./pop-up";
-import Drawer from "./Drawer"
+import Popover from "./pop-up";
+import Drawer from "./Drawer";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -30,11 +30,11 @@ export default function Header() {
         <div
           // onClick={handleClick}
           //   to={user ? '/account' : '/login'}
-          className="w-50 flex h-full items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
+          className="w-50 flex h-full justify-center items-center gap-2 rounded-full border-gray-300 py-1 px-2 md:border"
         >
           <MenuIcon />
           <div className="h-9">
-          <Drawer />
+            <Drawer />
           </div>
         </div>
       </div>
