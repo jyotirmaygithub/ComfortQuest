@@ -1,87 +1,79 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import MyStyledTextField from "../components/myStyledTextField";
 import { Logout } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import { TokenStatusContext } from "../context/tokenStatus";
-import { Toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import { FrontAuthFunction } from "../context/front-auth";
 import { StateContext } from "../context/States";
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import ProfilePopUp from "../components/Profile-Pop-up/ProfilePop";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import Progress from  "../components/Progress";
 
 export default function ActionAreaCard() {
   const { deleteAuthTokenCookie } = TokenStatusContext();
   const navigate = useNavigate();
-  // const { handleExistingUserData } = FrontAuthFunction();
   const { userDocument } = StateContext();
   const { name, email, picture } = userDocument;
-  // To enable changing username at run time.
-  const [combinedState, setCombinedState] = useState({
-    username: name,
-  });
 
-  useEffect(()=>{
-    setCombinedState({username : name})
-  },[userDocument]);
-
-  function onchange(e) {
-    setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
-  }
+  const [popUp, setPopUp] = useState(false);
 
   function handleLogout() {
     deleteAuthTokenCookie();
     navigate("/");
   }
-  function handleSubmit() {}
+  async function handleSubmit() {
+    setPopUp(true);
+  }
+
   return (
     <div className="flex justify-center items-center">
-      <Card className="p-4">
+      <Card className="p-2">
         <CardActionArea className="flex-col justify-center">
-            <Avatar
-              alt="profile picture"
-              src={picture}
-              sx={{ width: 250, height: 250 }}
-            />
+          <Avatar
+            alt="profile picture"
+            src={picture}
+            sx={{ width: 250, height: 250 }}
+          />
           <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
+            <Typography
+              startIcon={<EmailOutlinedIcon />}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
               {email ? email : ""}
+            </Typography>
+            <Typography
+              startIcon={<EmailOutlinedIcon />}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
+              {name ? name : ""}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <div className="flex-col justify-center py-4 space-y-2">
-          <MyStyledTextField
-            margin="normal"
-            value={combinedState.username}
-            required
-            fullWidth
-            id="username"
-            name="username"
-            autoComplete="name"
-            onChange={onchange}
-            autoFocus
-          />
-          <div className="flex justify-between">
-            <Button
-              onClick={handleSubmit}
-              variant="outlined"
-              startIcon={<EditIcon />}
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={handleLogout}
-              variant="contained"
-              startIcon={<Logout />}
-            >
-              Logout
-            </Button>
-          </div>
+        <div className="flex justify-between gap-8">
+          <Button
+            onClick={handleSubmit}
+            variant="outlined"
+            startIcon={<EditIcon />}
+          >
+            Edit Profile
+          </Button>
+          <ProfilePopUp open={popUp} openState={setPopUp} />
+          <Button
+            onClick={handleLogout}
+            variant="contained"
+            startIcon={<Logout />}
+          >
+            Logout
+          </Button>
         </div>
       </Card>
     </div>

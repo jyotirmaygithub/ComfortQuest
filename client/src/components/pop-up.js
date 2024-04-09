@@ -3,17 +3,26 @@ import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import {TokenStatusContext} from "../context/tokenStatus"
-import { ContactSupport, Info, Logout,PersonOutline } from "@mui/icons-material";
+import { TokenStatusContext } from "../context/tokenStatus";
+import {
+  ContactSupport,
+  Info,
+  Logout,
+  PersonOutline,
+  // Person2Outlined
+} from "@mui/icons-material";
+import { StateContext } from "../context/States";
 
 export default function UserName() {
-  const {checkCookie,deleteAuthTokenCookie} = TokenStatusContext();
+  const { checkCookie, deleteAuthTokenCookie } = TokenStatusContext();
+  const { userDocument } = StateContext();
   const [anchorEl, setAnchorEl] = useState(false);
   const [response, setResponse] = useState(false);
   const navigate = useNavigate();
+  const { picture } = userDocument;
 
   useEffect(() => {
-    console.log("waiting for response = " + checkCookie())
+    console.log("waiting for response = " + checkCookie());
     setResponse(checkCookie());
   }, []);
 
@@ -37,19 +46,21 @@ export default function UserName() {
   function handleContact() {
     navigate(`/contact`);
   }
-
+  function handleProfile() {
+    navigate("account/edit-profile");
+  }
   return (
     <>
       {response && (
         <Avatar
+          src={picture ? picture : ""}
           onClick={handleClick}
           className="bg-white text-black font-bold cursor-pointer"
         >
-          {/* {userName && userName[0].toUpperCase()} */}
         </Avatar>
       )}
       <Popover
-        className="mt-16"
+        className="mt-16 "
         open={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
@@ -58,6 +69,13 @@ export default function UserName() {
         }}
       >
         <div className="p-2 space-y-2 w-[110px]">
+          <Typography
+            className=" gap-2 hover:underline cursor-pointer flex justify-center items-center"
+            onClick={handleProfile}
+          >
+            Profile
+            <PersonOutline className="text-green-800 text-xl" />
+          </Typography>
           <Typography
             className=" gap-2 hover:underline cursor-pointer flex justify-center items-center"
             onClick={handleAbout}
@@ -80,7 +98,6 @@ export default function UserName() {
           >
             Log out
             <Logout className="text-red-600 " />
-
           </Typography>
         </div>
       </Popover>

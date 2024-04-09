@@ -3,17 +3,17 @@ import { jwtDecode } from "jwt-decode";
 import { TokenStatusContext } from "./tokenStatus";
 import { StateContext } from "./States";
 
-const FrontAuthContext = createContext();
+const FrontAuth = createContext();
 
 export function AuthFunction(props) {
-  const { getAuthToken,checkCookie } = TokenStatusContext();
+  const { getAuthToken, checkCookie } = TokenStatusContext();
   const { setUserDocument } = StateContext();
 
-  useEffect(()=>{
-    if(checkCookie){
-      handleExistingUserData()
+  useEffect(() => {
+    if (checkCookie) {
+      handleExistingUserData();
     }
-  },[])
+  }, []);
 
   // function  : To store auth token in the cookie..
   function storeAuthToken(userAuth_Token) {
@@ -142,20 +142,23 @@ export function AuthFunction(props) {
     }
   }
 
+
+
   return (
-    <FrontAuthContext.Provider
+    <FrontAuth.Provider
       value={{
         handleCreateUser,
-        // handleExistingUser,
+        handleExistingUser,
+        // handleEditProfile,
         handleGoogleLogin,
         handleExistingUserData,
       }}
     >
       {props.children}
-    </FrontAuthContext.Provider>
+    </FrontAuth.Provider>
   );
 }
 
-export function FrontAuthFunction() {
-  return useContext(FrontAuthContext);
+export function FrontAuthContext() {
+  return useContext(FrontAuth);
 }

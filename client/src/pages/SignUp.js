@@ -10,12 +10,12 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
-import { FrontAuthFunction } from "../context/front-auth";
+import { FrontAuthContext } from "../context/front-auth";
 import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { handleCreateUser,handleGoogleLogin } = FrontAuthFunction();
+  const { handleCreateUser,handleGoogleLogin } = FrontAuthContext();
 
   function Copyright(props) {
     return (
