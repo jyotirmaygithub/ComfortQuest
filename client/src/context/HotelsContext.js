@@ -7,7 +7,7 @@ export function HotelContextFunc(props) {
   const { getAuthToken } = TokenStatusContext();
   useEffect(() => {
     handleHotelData();
-    handleRetrivingBookingData()
+    handleRetrivingBookingData();
   }, []);
   // state to store array of the total number of hotels.
   const [hotelData, setHotelData] = useState([]);
@@ -65,25 +65,31 @@ export function HotelContextFunc(props) {
   async function handleHotelBooking(
     hotelId,
     userEmail,
-    Hotel,
-    Address,
+    hotelPicture,
+    hotelName,
+    hotelAddress,
     price,
+    noOfDays,
     checkIn,
     checkOut,
     userFullName,
-    userPhoneNumber
+    userPhoneNumber,
+    userNoOfRooms
   ) {
     console.log(
       "user booking details = ",
       hotelId,
       userEmail,
-      Hotel,
-      Address,
+      hotelPicture,
+      hotelName,
+      hotelAddress,
       price,
+      noOfDays,
       checkIn,
       checkOut,
       userFullName,
-      userPhoneNumber
+      userPhoneNumber,
+      userNoOfRooms
     );
     try {
       const response = await fetch(
@@ -97,13 +103,16 @@ export function HotelContextFunc(props) {
           body: JSON.stringify({
             hotelId,
             userEmail,
-            Hotel,
-            Address,
+            hotelPicture,
+            hotelName,
+            hotelAddress,
             price,
+            noOfDays,
             checkIn,
             checkOut,
             userFullName,
             userPhoneNumber,
+            userNoOfRooms,
           }),
         }
       );

@@ -32,7 +32,7 @@ const PlacePage = () => {
           <PerksWidget perks={perks} numOfFloors={numberfloor} />
         </div>
         <div>
-          <BookingDetails price={rates_from} numberOfRooms={numberrooms} Hotel={hotel_name} Address={addressline1} />
+          <BookingDetails price={rates_from} numberOfRooms={numberrooms} Hotel={hotel_name} Address={addressline1} picture1={photo1} />
         </div>
       </div>
       <div className="-mx-8 border-t bg-white px-8 py-8">
