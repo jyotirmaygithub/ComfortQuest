@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { TokenStatusContext } from "../context/tokenStatus";
 import { useNavigate } from "react-router-dom";
 import { StateContext } from "../context/States";
-import ProfilePopUp from "../components/Profile-Pop-up/ProfilePop";
+import ProfilePopUp from "../components/PopUps/ProfilePop";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Progress from  "../components/Progress";
 

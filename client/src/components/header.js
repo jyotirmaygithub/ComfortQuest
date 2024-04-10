@@ -2,8 +2,7 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchBar from "./searchBar";
 import { useNavigate } from "react-router-dom";
-import Popover from "./pop-up";
-import Drawer from "./Drawer";
+import Drawer from "./PopUps/Drawer";
 
 export default function Header() {
   const navigate = useNavigate();

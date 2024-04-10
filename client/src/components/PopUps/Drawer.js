@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Avatar } from "@mui/material";
-import { StateContext } from "../context/States";
+import { StateContext } from "../../context/States";
 import {
   ContactSupport,
   Info,
@@ -19,7 +19,7 @@ import {
   LivingOutlined,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { TokenStatusContext } from "../context/tokenStatus";
+import { TokenStatusContext } from "../../context/tokenStatus";
 
 export default function AnchorTemporaryDrawer() {
   const navigate = useNavigate();
