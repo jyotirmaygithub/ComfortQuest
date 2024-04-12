@@ -17,6 +17,7 @@ import {
   Person2Outlined,
   HotelOutlined,
   LivingOutlined,
+  MenuOutlined,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { TokenStatusContext } from "../../context/tokenStatus";
@@ -24,12 +25,18 @@ import { TokenStatusContext } from "../../context/tokenStatus";
 export default function AnchorTemporaryDrawer() {
   const navigate = useNavigate();
   const { userDocument } = StateContext();
-  const { deleteAuthTokenCookie } = TokenStatusContext();
+  const { checkCookie, deleteAuthTokenCookie } = TokenStatusContext();
   const [state, setState] = React.useState({});
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    setState({ ...state, [anchor]: open });
+  const toggleDrawer = (anchor, open) => async (event) => {
+    if(!checkCookie()){
+      navigate('/login')
+    }
+    else{
+      setState({ ...state, [anchor]: open });
+    }
   };
+  
   function handleClick(value) {
     if (value === "Logout") {
       deleteAuthTokenCookie();
@@ -95,8 +102,9 @@ export default function AnchorTemporaryDrawer() {
   return (
     <div>
       <React.Fragment key="avatar">
-        <Button onClick={toggleDrawer("avatar", true)}>
+        <Button className="space-x-2" onClick={toggleDrawer("avatar", true)}>
           {/* Render your Avatar component here */}
+          <MenuOutlined sx={{color:"black"}}/>
           <Avatar src={userDocument.picture} alt="User Avatar" />
         </Button>
         <Drawer
