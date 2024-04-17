@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { differenceInDays } from "date-fns";
+// import { differenceInDays } from "date-fns";
 import { toast } from "react-toastify";
 import DatePicker from "./Date/DatePicker";
 import MyStyledTextField from "./myStyledTextField";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-const BookingWidget = ({ price, numberOfRooms, Hotel, Address,picture1 }) => {
+const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { checkIn, checkOut, userDocument } = StateContext();
