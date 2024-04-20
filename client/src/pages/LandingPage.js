@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from "./HeaderLayout"
-import  Hotels from "../pages/Hotels";
+import Header from "../Layout/HeaderLayout"
+import  Hotels from "./Hotels";
 import Footer from "../components/footer"
 
 export default function FrontPage() {
