@@ -3,12 +3,12 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import LoginPage from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
 import NotFoundPage from "./pages/NotFound";
 import { AuthFunction } from "./context/front-auth";
 import { TokenStatusFunction } from "./context/tokenStatus";
-import ProfilePage from "./pages/ProfilePage";
+import EditProfile from "./pages/User/EditProfile";
 import { StatesFunction } from "./context/States";
 import { HotelContextFunc } from "./context/HotelsContext";
 import Hotels from "./pages/Hotels";
@@ -16,10 +16,10 @@ import { EditProfileContextFunc } from "./context/EditProfile";
 import CircleProgress from "./pages/CircleProgress";
 import FrontPage from "./Layout/FrontPage";
 import HotelDetails from "./pages/HotelDetails";
-import ShowProfile from "./pages/ShowProfile";
+import ShowProfile from "./pages/User/UserProfile";
 import Accomodation from "./pages/Accomadation"
-import Contact from "./pages/Contact"
-import About from "./pages/About"
+import Contact from "./pages/Info/Contact"
+import About from "./pages/Info/About"
 import Booking  from "./pages/Booking"
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
                       <Route
                         exact
                         path="/account/edit-profile"
-                        element={<ProfilePage />}
+                        element={<EditProfile />}
                       />
                       <Route
                         exact
