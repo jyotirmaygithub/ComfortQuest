@@ -3,24 +3,23 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthFunction } from "./context/front-auth";
+import { TokenStatusFunction } from "./context/tokenStatus";
+import { HotelContextFunc } from "./context/HotelsContext";
+import { StatesFunction } from "./context/States";
+import { EditProfileContextFunc } from "./context/EditProfile";
 import LoginPage from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import NotFoundPage from "./pages/NotFound";
-import { AuthFunction } from "./context/front-auth";
-import { TokenStatusFunction } from "./context/tokenStatus";
 import EditProfile from "./pages/User/EditProfile";
-import { StatesFunction } from "./context/States";
-import { HotelContextFunc } from "./context/HotelsContext";
-import Hotels from "./pages/Hotels";
-import { EditProfileContextFunc } from "./context/EditProfile";
 import CircleProgress from "./pages/CircleProgress";
-import FrontPage from "./Layout/FrontPage";
+import LandingPage from "./pages/LandingPage";
 import HotelDetails from "./pages/HotelDetails";
-import ShowProfile from "./pages/User/UserProfile";
-import Accomodation from "./pages/Accomadation"
+import UserProfile from "./pages/User/UserProfile";
+import RegisterHotel from "./pages/RegisterHotel"
 import Contact from "./pages/Info/Contact"
 import About from "./pages/Info/About"
-import Booking  from "./pages/Booking"
+import BookedHotels  from "./pages/User/BookedHotels"
 
 function App() {
   return (
@@ -33,13 +32,13 @@ function App() {
                 <EditProfileContextFunc>
                   <Router>
                     <Routes>
-                      <Route exact path="/" element={<FrontPage />} />
+                      <Route exact path="/" element={<LandingPage />} />
                       <Route exact path="/login" element={<LoginPage />} />
                       <Route exact path="/signup" element={<SignUp />} />
                       <Route
                         exact
                         path="/account/:name"
-                        element={<ShowProfile />}
+                        element={<UserProfile />}
                       />
                       <Route
                         exact
@@ -54,12 +53,12 @@ function App() {
                       <Route
                         exact
                         path="/booking/:name"
-                        element={<Booking />}
+                        element={<BookedHotels />}
                       />
                       <Route
                         exact
                         path="/accommodation/:name"
-                        element={<Accomodation />}
+                        element={<RegisterHotel />}
                       />
                       <Route
                         exact

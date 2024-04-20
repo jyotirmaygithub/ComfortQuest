@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AddressLink from '../components/AdressLink';
 import BookingDetails from '../components/BookingDetails';
-import PlaceGallery from '../components/ImageGallery';
-import PerksWidget from '../components/Perks';
+import PlaceGallery from '../components/Gallery/ImageGallery';
+import PerksWidget from '../components/Perks/perksShow';
 import {HotelContext} from "../context/HotelsContext"
 import { useParams } from 'react-router-dom';
 

@@ -9,6 +9,7 @@ import { HotelContext } from "../context/HotelsContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const { id } = useParams();
@@ -142,17 +143,23 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
         </div>
       </div>
       <div className="flex justify-center mt-[15px]">
-        <Button
-          sx={{
-            padding: "10px",
-            gap: "20px",
-          }}
-          variant="contained"
-          onClick={handleBooking}
-        >
-          <p>Book this place</p> <span>:</span>
-          {days > 0 ? <p>{hotelPrice}</p> : price}
-        </Button>
+      <Button
+      variant="contained"
+      onClick={handleBooking}
+      sx={{
+        padding: "10px",
+        display: "flex",
+        alignItems: "center",
+        gap: "20px",
+      }}
+    >
+      <Typography variant="body1" component="p" sx={{ whiteSpace: "nowrap" }}>
+        Book this place:
+      </Typography>
+      <Typography variant="body1" component="p">
+        {days > 0 ? hotelPrice : price}
+      </Typography>
+    </Button>
       </div>
     </div>
   );
