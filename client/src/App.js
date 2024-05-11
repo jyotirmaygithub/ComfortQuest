@@ -20,6 +20,8 @@ import RegisterHotel from "./pages/RegisterHotel"
 import Contact from "./pages/Info/Contact"
 import About from "./pages/Info/About"
 import BookedHotels  from "./pages/User/BookedHotels"
+import Footer from "./components/footer";
+import HeaderLayout from "./Layout/Header";
 
 function App() {
   return (
@@ -48,7 +50,7 @@ function App() {
                       <Route
                         exact
                         path="/hotel/:id"
-                        element={<HotelDetails />}
+                        element={<><HeaderLayout/><HotelDetails /><Footer /></>}
                       />
                       <Route
                         exact
