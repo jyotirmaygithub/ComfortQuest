@@ -1,6 +1,6 @@
 import React from "react";
 import { HotelContext } from "../../context/HotelsContext";
-import BookedLayout from "../../Layout/BookedLayout";
+import BookedLayout from "../../Layout/Occupied";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
