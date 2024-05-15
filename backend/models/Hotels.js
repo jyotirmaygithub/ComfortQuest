@@ -15,7 +15,7 @@ const hotelSchema = new Schema({
         type : String,
         required : true,
     },
-    photos : [String],
+    images : [String],
     description : {
         type : String,
     },
@@ -35,5 +35,5 @@ const hotelSchema = new Schema({
     }
 })
 
-const newPlaces = mongoose.model("hotels" , hotelSchema);
+const newPlaces = mongoose.model("hotels-trial" , hotelSchema);
 module.exports = newPlaces
