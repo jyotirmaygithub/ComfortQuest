@@ -4,17 +4,18 @@ import { styled } from "@mui/system";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { StateContext } from "../../context/States";
 
-const RootPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-}));
+// const RootPaper = styled(Paper)(({ theme }) => ({
+//   padding: theme.spacing(2),
+// }));
 
 const UploadContainer = styled("div")({
   textAlign: "center",
 });
 
 export default function ImageUploader() {
-  const [selectedImages, setSelectedImages] = useState([]);
+  const {selectedImages, setSelectedImages} = StateContext();
 
   const paperStyle = {
     padding: "32px",

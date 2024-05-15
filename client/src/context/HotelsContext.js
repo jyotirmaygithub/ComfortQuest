@@ -151,6 +151,45 @@ export function HotelContextFunc(props) {
       console.error("Internal Servor Error", error.message);
     }
   }
+
+  // Route 5 : To register a new hotel in the database.
+  async function handleRegisterNewhotel(
+    title,
+    address,
+    description,
+    extraInfo,
+    maxGuests,
+    price
+  ) {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DEV_URL}/api/newHotel/register-new-hotel`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": getAuthToken(),
+          },
+          body: JSON.stringify({
+            title,
+            address,
+            description,
+            extraInfo,
+            maxGuests,
+            price
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const resData = await response.json();
+      console.log("register hotle data = ", resData);
+      // setuserBooking(resData);
+    } catch (error) {
+      console.error("Internal Servor Error", error.message);
+    }
+  }
   return (
     <Hotels.Provider
       value={{
@@ -160,6 +199,7 @@ export function HotelContextFunc(props) {
         handleHotelBooking,
         handleRetrivingBookingData,
         userBooking,
+        handleRegisterNewhotel,
       }}
     >
       {props.children}
