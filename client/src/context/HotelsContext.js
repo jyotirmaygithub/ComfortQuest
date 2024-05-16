@@ -153,14 +153,23 @@ export function HotelContextFunc(props) {
   }
 
   // Route 5 : To register a new hotel in the database.
-  async function handleRegisterNewhotel(
-    title,
-    address,
-    description,
-    extraInfo,
-    maxGuests,
-    price
-  ) {
+  async function handleRegisterNewhotel(formData) {
+    console.log("formadata = ", formData);
+    const {
+      chainName,
+      hotelName,
+      hotelAddress,
+      zipCode,
+      cityName,
+      stateName,
+      countryName,
+      hotelUrl,
+      totalRooms,
+      hotelDescription,
+      hotelPhone,
+      hotelEmail,
+      price,
+    } = formData;
     try {
       const response = await fetch(
         `${process.env.REACT_APP_DEV_URL}/api/newHotel/register-new-hotel`,
@@ -171,12 +180,19 @@ export function HotelContextFunc(props) {
             "auth-token": getAuthToken(),
           },
           body: JSON.stringify({
-            title,
-            address,
-            description,
-            extraInfo,
-            maxGuests,
-            price
+            chainName,
+            hotelName,
+            hotelAddress,
+            zipCode,
+            cityName,
+            stateName,
+            countryName,
+            hotelUrl,
+            totalRooms,
+            hotelDescription,
+            hotelPhone,
+            hotelEmail,
+            price,
           }),
         }
       );

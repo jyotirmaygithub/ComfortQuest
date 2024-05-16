@@ -6,9 +6,6 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { StateContext } from "../../context/States";
 
-// const RootPaper = styled(Paper)(({ theme }) => ({
-//   padding: theme.spacing(2),
-// }));
 
 const UploadContainer = styled("div")({
   textAlign: "center",
@@ -44,7 +41,7 @@ export default function ImageUploader() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h5">Upload Images for Your Hotel</Typography>
+          <Typography variant="h6">Upload Images for Your Hotel</Typography>
         </Grid>
         <Grid item xs={12} component={UploadContainer}>
           <IconButton component="label">
