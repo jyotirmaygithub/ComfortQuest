@@ -21,9 +21,8 @@ export default function HotelLayout(HotelData) {
     navigate(`/hotel/${_id}`)
   }
   return (
-    <section className="my-5" onClick={handleHotel}>
+    <section className="my-5 cursor-pointer" onClick={handleHotel}>
       <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl w-[400px] h-[350px]">
-        {/* <a href="#"> */}
         <div className="relative flex items-end overflow-hidden rounded-xl h-[200px]">
           <img src={photo1} alt="Hotel Photo" className="w-screen" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
@@ -52,20 +51,8 @@ export default function HotelLayout(HotelData) {
               </span>
               <span className="text-slate-400 text-sm">/night</span>
             </p>
-
-            <div className="group inline-flex rounded-xl bg-blue-100 p-2 hover:bg-blue-200">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="group-hover:text-blue-500 h-4 w-4 text-blue-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-              </svg>
-            </div>
           </div>
         </div>
-        {/* </a> */}
       </article>
     </section>
   );

@@ -3,25 +3,25 @@ import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/header";
-import LoginPage from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import NotFoundPage from "./pages/NotFound";
 import { AuthFunction } from "./context/front-auth";
 import { TokenStatusFunction } from "./context/tokenStatus";
-import ProfilePage from "./pages/ProfilePage";
-import { StatesFunction } from "./context/States";
 import { HotelContextFunc } from "./context/HotelsContext";
-import Hotels from "./pages/Hotels";
+import { StatesFunction } from "./context/States";
 import { EditProfileContextFunc } from "./context/EditProfile";
+import LoginPage from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
+import NotFoundPage from "./pages/NotFound";
+import EditProfile from "./pages/User/EditProfile";
 import CircleProgress from "./pages/CircleProgress";
-import FrontPage from "./Layout/FrontPage";
+import LandingPage from "./pages/LandingPage";
 import HotelDetails from "./pages/HotelDetails";
-import ShowProfile from "./pages/ShowProfile";
-import Accomodation from "./pages/Accomadation"
-import Contact from "./pages/Contact"
-import About from "./pages/About"
-import Booking  from "./pages/Booking"
+import UserProfile from "./pages/User/UserProfile";
+import RegisterHotel from "./pages/RegisterHotel"
+import Contact from "./pages/Info/Contact"
+import About from "./pages/Info/About"
+import BookedHotels  from "./pages/User/BookedHotels"
+import Footer from "./components/footer";
+import HeaderLayout from "./Layout/Header";
 
 function App() {
   return (
@@ -34,33 +34,33 @@ function App() {
                 <EditProfileContextFunc>
                   <Router>
                     <Routes>
-                      <Route exact path="/" element={<FrontPage />} />
+                      <Route exact path="/" element={<LandingPage />} />
                       <Route exact path="/login" element={<LoginPage />} />
                       <Route exact path="/signup" element={<SignUp />} />
                       <Route
                         exact
                         path="/account/:name"
-                        element={<ShowProfile />}
+                        element={<UserProfile />}
                       />
                       <Route
                         exact
                         path="/account/edit-profile"
-                        element={<ProfilePage />}
+                        element={<EditProfile />}
                       />
                       <Route
                         exact
                         path="/hotel/:id"
-                        element={<HotelDetails />}
+                        element={<><HeaderLayout/><HotelDetails /><Footer /></>}
                       />
                       <Route
                         exact
                         path="/booking/:name"
-                        element={<Booking />}
+                        element={<BookedHotels />}
                       />
                       <Route
                         exact
                         path="/accommodation/:name"
-                        element={<Accomodation />}
+                        element={<RegisterHotel />}
                       />
                       <Route
                         exact

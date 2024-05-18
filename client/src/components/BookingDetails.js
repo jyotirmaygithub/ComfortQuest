@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { differenceInDays } from "date-fns";
+// import { differenceInDays } from "date-fns";
 import { toast } from "react-toastify";
-import DatePicker from "./DatePicker";
+import DatePicker from "./Date/DatePicker";
 import MyStyledTextField from "./myStyledTextField";
 import { StateContext } from "../context/States";
 import { TokenStatusContext } from "../context/tokenStatus";
@@ -10,8 +9,9 @@ import { HotelContext } from "../context/HotelsContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-const BookingWidget = ({ price, numberOfRooms, Hotel, Address }) => {
+const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { checkIn, checkOut, userDocument } = StateContext();
@@ -68,21 +68,24 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address }) => {
     } else if (!/^\d{10}$/.test(bookingData.phone.trim())) {
       return toast.error("Phone number must be 10 digits long");
     }
-    console.log("hotel price in a function = ", hotelPrice);
     returnResponse(
       await handleHotelBooking(
         id,
         userDocument.email,
+        picture1,
         Hotel,
         Address,
         hotelPrice,
+        days,
         checkIn,
         checkOut,
         bookingData.name,
-        bookingData.phone
+        bookingData.phone,
+        bookingData.noOfRooms
       )
     );
   }
+  console.log("number of days  = ", days);
   function returnResponse(response) {
     if (response.success) {
       toast.success(response.message);
@@ -139,15 +142,24 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address }) => {
           />
         </div>
       </div>
-      <div className="flex justify-center">
-        <Button
-          variant="contained"
-          onClick={handleBooking}
-          className=" space-y-2"
-        >
-          Book this place
-          {days > 0 ? <span>{hotelPrice}</span> : price}
-        </Button>
+      <div className="flex justify-center mt-[15px]">
+      <Button
+      variant="contained"
+      onClick={handleBooking}
+      sx={{
+        padding: "10px",
+        display: "flex",
+        alignItems: "center",
+        gap: "20px",
+      }}
+    >
+      <Typography variant="body1" component="p" sx={{ whiteSpace: "nowrap" }}>
+        Book this place:
+      </Typography>
+      <Typography variant="body1" component="p">
+        {days > 0 ? hotelPrice : price}
+      </Typography>
+    </Button>
       </div>
     </div>
   );

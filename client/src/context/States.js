@@ -11,10 +11,21 @@ export function StatesFunction(props) {
   const [userDocument, setUserDocument] = useState({});
   const [checkIn, SetCheckIn] = useState(dayjs(dateString));
   const [checkOut, setCheckOut] = useState(dayjs(dateString));
+  // state to hold the user seleted images for the register purpuse.
+  const [selectedImages, setSelectedImages] = useState([]);
 
   return (
     <AppStates.Provider
-      value={{ userDocument, setUserDocument,checkIn,SetCheckIn,checkOut,setCheckOut }}
+      value={{
+        userDocument,
+        setUserDocument,
+        checkIn,
+        SetCheckIn,
+        checkOut,
+        setCheckOut,
+        selectedImages,
+        setSelectedImages,
+      }}
     >
       {props.children}
     </AppStates.Provider>

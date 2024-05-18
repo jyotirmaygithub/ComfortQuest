@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -8,15 +8,18 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MyStyledTextField from "../components/myStyledTextField";
+import MyStyledTextField from "../../components/myStyledTextField";
 import { GoogleLogin } from "@react-oauth/google";
-import { FrontAuthContext } from "../context/front-auth";
+import {FrontAuthContext} from "../../context/front-auth"
 import { toast } from 'react-toastify';
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { handleCreateUser,handleGoogleLogin } = FrontAuthContext();
+  const navigate = useNavigate()
+  const {handleExistingUser,handleGoogleLogin} = FrontAuthContext();
 
+  function handleClickSignUp(){
+    navigate("/signup")
+  }
   function Copyright(props) {
     return (
       <Typography
@@ -34,15 +37,13 @@ export default function Login() {
 
   const defaultTheme = createTheme();
   const [combinedState, setCombinedState] = useState({
-    name : "",
     email: "",
     password: "",
   });
 
-
  async function handleSubmit(event) {
     event.preventDefault();
-    returnResponse( await handleCreateUser(combinedState.name ,combinedState.email, combinedState.password));
+    returnResponse(await handleExistingUser(combinedState.email, combinedState.password));
   }
 
   function onchange(e) {
@@ -87,17 +88,6 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="Username"
-              name="name"
-              autoComplete="name"
-              onChange={onchange}
-              autoFocus
-            />
-            <MyStyledTextField
-              margin="normal"
-              required
-              fullWidth
               id="email"
               label="Email Address"
               name="email"
@@ -118,7 +108,7 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-              className="bg-black"
+            className="bg-black"
               type="submit"
               fullWidth
               variant="contained"
@@ -127,23 +117,30 @@ export default function Login() {
               <p>LOG IN</p>
             </Button>
             <div className="mb-4 flex w-full items-center gap-4">
-              <div className="h-0 w-1/2 border-[1px]"></div>
-              <p className="small -mt-1">or</p>
-              <div className="h-0 w-1/2 border-[1px]"></div>
-            </div>
-            {/* Google login button */}
-            <div className="flex h-[50px] justify-center">
-              <GoogleLogin
-                 onSuccess={async (credentialResponse) => {
-                  returnResponse(await handleGoogleLogin(credentialResponse.credential))
-                 }}
-                onError={() => {
-                  console.log("Login Failed");
-                }}
-                text="continue_with"
-                width="350"
-              />
-            </div>
+          <div className="h-0 w-1/2 border-[1px]"></div>
+          <p className="small -mt-1">or</p>
+          <div className="h-0 w-1/2 border-[1px]"></div>
+        </div>
+         {/* Google login button */}
+         <div className="flex h-[50px] justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+             returnResponse(await handleGoogleLogin(credentialResponse.credential))
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            text="continue_with"
+            width="350"
+          />
+        </div>
+
+        <div className="py-2 px-8 text-center flex text-gray-500">
+          Don't have an account yet?{' '}
+          <div onClick={handleClickSignUp} className="text-black cursor-pointer underline">
+            Register now
+          </div>
+        </div>
           </Box>
         </Box>
         <Copyright sx={{ mt: 2, mb: 4 }} />

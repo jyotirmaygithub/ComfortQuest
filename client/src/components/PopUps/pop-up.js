@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import { TokenStatusContext } from "../context/tokenStatus";
+import { TokenStatusContext } from "../../context/tokenStatus";
 import {
   ContactSupport,
   Info,
@@ -11,7 +11,7 @@ import {
   PersonOutline,
   // Person2Outlined
 } from "@mui/icons-material";
-import { StateContext } from "../context/States";
+import { StateContext } from "../../context/States";
 
 export default function UserName() {
   const { checkCookie, deleteAuthTokenCookie } = TokenStatusContext();

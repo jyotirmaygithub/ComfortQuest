@@ -1,5 +1,5 @@
 import React from "react";
-import HotelLayout from "../Layout/hotelLayout";
+import HotelLayout from "../Layout/Hotel";
 import { HotelContext } from "../context/HotelsContext";
 
 export default function Hotels() {
