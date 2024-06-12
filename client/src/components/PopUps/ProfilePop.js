@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,39 +11,80 @@ import { StateContext } from "../../context/States";
 import { EditProfileContext } from "../../context/EditProfile";
 import { FrontAuthContext } from "../../context/front-auth";
 import { toast } from "react-toastify";
+import EditIcon from "@mui/icons-material/Edit";
+import { styled } from "@mui/material/styles";
+
+const AvatarContainer = styled("div")({
+  position: "relative",
+  width: 250,
+  height: 250,
+  cursor: "pointer",
+  "&:hover .overlay": {
+    opacity: 1,
+  },
+});
+
+const Overlay = styled("div")({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  opacity: 0,
+  transition: "opacity 0.3s ease",
+  color: "white",
+});
 
 export default function FormDialog({ open, openState }) {
-  const { userDocument } = StateContext();
+  const { userDocument, setEditLoader } = StateContext();
   const { handleExistingUserData } = FrontAuthContext();
   const { saveImage, handleEditProfile } = EditProfileContext();
-  const [selectedFile, setSelectedFile] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userImage, setuserImage] = useState(null);
   const { name, picture } = userDocument;
-  // To render the image url into the state, when data of the user get fetch.
-  useEffect(() => {
-    if (picture) {
-      setSelectedFile(picture);
-    }
-    if (name) {
-      setUserName(name);
-    }
-  }, [userDocument]);
 
   function onchange(e) {
     setUserName(e.target.value);
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error("File size exceeds 10MB limit");
+        return;
+      }
+      setuserImage(file);
+    } else {
+      setuserImage(null);
+    }
+  };
+
   function handleClose() {
     openState(false);
   }
+
   async function handleEditProfileBtn() {
-    toast.info("'Updating profile can take time , please wait...")
+    if (userImage) {
+      setEditLoader(true);
+    }
+
     openState(false);
-    const imageURL = await saveImage(userImage);
-    const response  = await handleEditProfile(userName, imageURL);
-    returnResponse(response)
+
+    const imageURL = userImage ? await saveImage(userImage) : null;
+    returnResponse(await handleEditProfile(userName, imageURL));
     handleExistingUserData();
+
+    // Reset the loader state if it was set
+    if (userImage) {
+      setEditLoader(false);
+    }
   }
+
   function returnResponse(response) {
     if (response.success) {
       toast.success(response.message);
@@ -51,43 +92,37 @@ export default function FormDialog({ open, openState }) {
       toast.error(response.message);
     }
   }
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle id="form-dialog-title">Edit Your Profile</DialogTitle>
-      <DialogContent className=" flex-col space-y-6">
-        <DialogContentText>
-          Click on the photo below to update your profile picture.
-        </DialogContentText>
-        <label htmlFor="avatarInput" className="cursor-pointer flex justify-center">
-          <Avatar
-            alt="profile picture"
-            src={userImage ? URL.createObjectURL(userImage) : picture}
-            sx={{ width: 250, height: 250 }}
+      <DialogContent className="flex-col space-y-7">
+          <DialogContentText>
+          Revise your profile picture and name.
+          </DialogContentText>
+        <AvatarContainer>
+          <label htmlFor="avatarInput">
+            <Avatar
+              alt="profile picture"
+              src={userImage ? URL.createObjectURL(userImage) : picture}
+              sx={{ width: 250, height: 250 }}
+            />
+            <Overlay className="overlay">
+              <EditIcon sx={{ fontSize: 50 }} />
+            </Overlay>
+          </label>
+          <input
+            id="avatarInput"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleImageChange}
           />
-        </label>
-        <input
-          id="avatarInput"
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            const file = e.target.files[0];
-            if (file) {
-              if (file.size > 10 * 1024 * 1024) {
-                // Check file size (10MB limit)
-                // Show error using toastify
-                toast.error("File size exceeds 10MB limit");
-                return;
-              }
-              // If conditon is satisfied, set the user image
-              setuserImage(file);
-            }
-          }}
-        />
-        <DialogContentText> Update User Name. </DialogContentText>
+        </AvatarContainer>
+        {/* <DialogContentText>Update User Name.</DialogContentText> */}
         <MyStyledTextField
           margin="normal"
-          value={userName}
+          value={userName ? userName : name}
           required
           fullWidth
           id="username"
@@ -98,10 +133,18 @@ export default function FormDialog({ open, openState }) {
         />
       </DialogContent>
       <DialogActions className="mb-3">
-        <Button sx={{color:"black"}} onClick={handleClose} className="text-white bg-black">
+        <Button
+          sx={{ color: "black" }}
+          onClick={handleClose}
+          className="text-white bg-black"
+        >
           Cancel
         </Button>
-        <Button sx={{color:"black"}} onClick={handleEditProfileBtn} className="text-white bg-black">
+        <Button
+          sx={{ color: "black" }}
+          onClick={handleEditProfileBtn}
+          className="text-white bg-black"
+        >
           Edit Profile
         </Button>
       </DialogActions>

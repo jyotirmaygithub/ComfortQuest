@@ -4,7 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import { StateContext } from "../../context/States";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import Trial from "../../components/PopUps/trial";
+import ThreeDotsPopUp from "../../components/PopUps/threeDotPop";
 
 export default function ActionAreaCard() {
   const { userDocument } = StateContext();
@@ -13,7 +13,7 @@ export default function ActionAreaCard() {
   return (
     <div className="flex justify-center items-center h-[100vh] w-[100vw] space-y-2">
       <div className="flex-col justify-center border-2 border-stone-400 border-solid p-4 rounded-md space-y-10">
-        <Trial />
+        <ThreeDotsPopUp />
         <Avatar
           alt="profile picture"
           src={picture}

@@ -13,19 +13,20 @@ import { useNavigate } from "react-router-dom";
 import { TokenStatusContext } from "../../context/tokenStatus";
 import { StateContext } from "../../context/States";
 import { FrontAuthContext } from "../../context/front-auth";
+import CircleProgress from "../../components/progress/circle";
 
 export default function ActionAreaCard() {
   const navigate = useNavigate();
   const { deleteAuthTokenCookie } = TokenStatusContext();
-  const { userDocument } = StateContext();
-  const {handleExistingUserData} = FrontAuthContext()
+  const { userDocument, editLoader } = StateContext();
+  const { handleExistingUserData } = FrontAuthContext();
   const { name, email, picture } = userDocument;
 
   const [popUp, setPopUp] = useState(false);
 
   function handleLogout() {
     deleteAuthTokenCookie();
-    handleExistingUserData()
+    handleExistingUserData();
     navigate("/login");
   }
 
@@ -34,14 +35,17 @@ export default function ActionAreaCard() {
   }
 
   return (
-    <div className="flex justify-center items-center mt-5">
+    <div className="h-[100vh] flex justify-center items-center mt-5">
       <Card className="p-2">
         <CardActionArea className="flex-col justify-center">
           <Avatar
             alt="profile picture"
-            src={picture}
-            sx={{ width: 250, height: 250, margin: "auto" }} 
-          />
+            src={editLoader ? undefined : picture}
+            sx={{ width: 250, height: 250, margin: "auto" }}
+          >
+            {editLoader && <CircleProgress color="black" />}
+          </Avatar>
+
           <CardContent>
             <Typography
               gutterBottom
@@ -63,19 +67,19 @@ export default function ActionAreaCard() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <div className="flex justify-between gap-8 p-4"> 
+        <div className="flex justify-between gap-8 p-4">
           <Button
             onClick={handleSubmit}
             variant="outlined"
             startIcon={<EditIcon />}
             sx={{
               background: "white",
-              color : "black",
+              color: "black",
               borderColor: "black",
               "&:hover": {
                 background: "black",
                 borderColor: "white",
-                color: "white", 
+                color: "white",
               },
             }}
           >
@@ -90,7 +94,7 @@ export default function ActionAreaCard() {
               background: "black",
               "&:hover": {
                 background: "white",
-                color: "black", 
+                color: "black",
               },
             }}
           >
