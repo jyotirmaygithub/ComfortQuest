@@ -4,7 +4,7 @@ const fetchUserId = require("../middleware/fetchUserId");
 const Hotels = require("../models/Hotels");
 require("dotenv").config();
 
-router.post("/register-new-hotel", fetchUserId, async (req, res) => {
+router.post("/register-hotel", fetchUserId, async (req, res) => {
   try {
     const {
       chainName,
@@ -20,6 +20,11 @@ router.post("/register-new-hotel", fetchUserId, async (req, res) => {
       hotelPhone,
       hotelEmail,
       price,
+      photo1,
+      photo2,
+      photo3,
+      photo4,
+      photo5,
     } = req.body;
     // CHECK 2 : dont want two or more user of same email id.
     const data = await Hotels.create({
@@ -38,8 +43,14 @@ router.post("/register-new-hotel", fetchUserId, async (req, res) => {
       phone: hotelPhone,
       email: hotelEmail,
       rates_from: price,
+      photo1: photo1,
+      photo2: photo2,
+      photo3: photo3,
+      photo4: photo4,
+      photo5: photo4,
     });
-    res.json({ userDetails: data, msg: "user entered its details" });
+    console.log("data of the new hotel = ", data);
+    res.json({ data });
   } catch (error) {
     // throw errors.
     console.error(error.message);
