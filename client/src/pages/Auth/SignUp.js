@@ -142,15 +142,15 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-              sx={{
-                background: "black",
-                mt: 3,
-                mb: 2,
-                "&:hover": {
-                  background: "grey",
-                  color: "black", // Change text color to white on hover
-                },
-              }}
+              // sx={{
+              //   background: "black",
+              //   mt: 3,
+              //   mb: 2,
+              //   "&:hover": {
+              //     background: "grey",
+              //     color: "black", // Change text color to white on hover
+              //   },
+              // }}
               type="submit"
               fullWidth
               variant="contained"
@@ -165,7 +165,7 @@ export default function Login() {
             {/* Google login button */}
             <div className="flex h-[50px] justify-center">
               {loading ? (
-                <CircularProgress color="black" />
+                <CircularProgress  />
               ) : (
                 <GoogleLogin
                   onSuccess={async (credentialResponse) => {
