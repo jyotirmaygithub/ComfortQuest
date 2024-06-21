@@ -14,29 +14,28 @@ const PerksWidget = ({ numOfFloors }) => {
 
       <div className="mt-4 grid flex-col gap-4 lg:grid-cols-2 lg:justify-items-stretch lg:gap-4">
         <div className="flex gap-4">
-          <WifiOutlinedIcon className="h-6 w-6" />
+          <WifiOutlinedIcon className="h-6 w-6" sx={{color: "#60A5FA"}}/>
           <span>Wifi</span>
         </div>
         <div className="flex gap-4">
-          <TvOutlinedIcon className="h-6 w-6" />
+          <TvOutlinedIcon className="h-6 w-6"  sx={{color: "#60A5FA"}}/>
           <span>TV</span>
         </div>
         <div className="flex gap-4">
-          <LocalParkingOutlinedIcon className="h-6 w-6" />
+          <LocalParkingOutlinedIcon className="h-6 w-6" sx={{color: "#60A5FA"}} />
           <span>Free parking spot</span>
         </div>
         <div className="flex gap-4">
-          <RadioOutlinedIcon className="h-6 w-6" />
+          <RadioOutlinedIcon className="h-6 w-6" sx={{color: "#60A5FA"}} />
           <span>Radio</span>
         </div>
         <div className="flex gap-4">
-          <PetsOutlinedIcon className="h-6 w-6" />
-          {/* <span className={`${perks?.includes('pets') ? '' : 'line-through'}`}> */}
+          <PetsOutlinedIcon className="h-6 w-6" sx={{color: "#60A5FA"}} />
           <span>Pets</span>
         </div>
         {numOfFloors ? (
           <div className="flex gap-4">
-            <BusinessOutlinedIcon className="h-6 w-6" />
+            <BusinessOutlinedIcon className="h-6 w-6" sx={{color: "#60A5FA"}} />
             <span>Number of floors : {numOfFloors}</span>
           </div>
         ) : (

@@ -1,5 +1,4 @@
-import React, {useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,30 +8,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../../components/myStyledTextField";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import {FrontAuthContext} from "../../context/front-auth"
-import { toast } from 'react-toastify';
+import { FrontAuthContext } from "../../context/front-auth";
+import { toast } from "react-toastify";
+import CircleProgress from "../../components/progress/circle";
+import Copyright from "../../components/copyright";
+import { HotelContext } from "../../context/HotelsContext";
 
 export default function Login() {
-  const navigate = useNavigate()
-  const {handleExistingUser,handleGoogleLogin} = FrontAuthContext();
+  const navigate = useNavigate();
+  const { handleExistingUser, handleGoogleLogin } = FrontAuthContext();
+  const {handleRetrivingBookingData} = HotelContext()
 
-  function handleClickSignUp(){
-    navigate("/signup")
-  }
-  function Copyright(props) {
-    return (
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
-        {"Copyright © "}
-        NoteVault {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    );
+  function handleClickSignUp() {
+    navigate("/signup");
   }
 
   const defaultTheme = createTheme();
@@ -40,22 +30,58 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loading, setloading] = useState(false);
+  const [loading2, setloading2] = useState(false);
 
- async function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    returnResponse(await handleExistingUser(combinedState.email, combinedState.password));
+    if (!combinedState.email || !combinedState.password) {
+      toast.error("Email and password are required");
+      return;
+    }
+    // Check if email is in valid format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(combinedState.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    // Check password strength (medium or strong)
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(combinedState.password)) {
+      toast.error(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number"
+      );
+      return;
+    }
+    // If all checks pass, proceed with API call
+    try {
+      setloading2(true);
+      const response = await handleExistingUser(
+        combinedState.email,
+        combinedState.password
+      );
+      // Handle successful response
+      returnResponse(response);
+    } catch (error) {
+      // Handle API errors
+      console.error(error);
+      // toast.error("An error occurred. Please try again later.");
+    }
   }
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
   }
 
-  function returnResponse(response){
+  function returnResponse(response) {
+    setloading(false);
+    setloading2(false);
     if (response.success) {
-      toast.success(response.message)
-      navigate('/')
-    }
-    else{
+      toast.success(response.message);
+      navigate("/");
+      handleRetrivingBookingData()
+    } else {
       toast.error(response.message);
     }
   }
@@ -108,39 +134,56 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-            className="bg-black"
+              // sx={{
+              //   background: "black",
+              //   mt: 3,
+              //   mb: 2,
+              //   "&:hover": {
+              //     background: "black",
+              //     color: "white", // Change text color to white on hover
+              //   },
+              // }}
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
             >
-              <p>LOG IN</p>
+              {loading2 ? <CircleProgress color="white" /> : <>LOG IN</>}
             </Button>
             <div className="mb-4 flex w-full items-center gap-4">
-          <div className="h-0 w-1/2 border-[1px]"></div>
-          <p className="small -mt-1">or</p>
-          <div className="h-0 w-1/2 border-[1px]"></div>
-        </div>
-         {/* Google login button */}
-         <div className="flex h-[50px] justify-center">
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-             returnResponse(await handleGoogleLogin(credentialResponse.credential))
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            text="continue_with"
-            width="350"
-          />
-        </div>
+              <div className="h-0 w-1/2 border-[1px]"></div>
+              <p className="small -mt-1">or</p>
+              <div className="h-0 w-1/2 border-[1px]"></div>
+            </div>
+            {/* Google login button */}
+            <div className="flex h-[50px] justify-center">
+              {loading ? (
+                <CircleProgress/>
+              ) : (
+                <GoogleLogin
+                  onSuccess={async (credentialResponse) => {
+                    setloading(true);
+                    returnResponse(
+                      await handleGoogleLogin(credentialResponse.credential)
+                    );
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                  text="continue_with"
+                  width="350"
+                />
+              )}
+            </div>
 
-        <div className="py-2 px-8 text-center flex text-gray-500">
-          Don't have an account yet?{' '}
-          <div onClick={handleClickSignUp} className="text-black cursor-pointer underline">
-            Register now
-          </div>
-        </div>
+            <div className="py-2 px-8 text-center flex text-gray-500">
+              Don't have an account yet?{" "}
+              <div
+                onClick={handleClickSignUp}
+                className="text-blue-400 cursor-pointer underline"
+              >
+                Register now
+              </div>
+            </div>
           </Box>
         </Box>
         <Copyright sx={{ mt: 2, mb: 4 }} />

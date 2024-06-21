@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { differenceInDays } from "date-fns";
 import { toast } from "react-toastify";
 import DatePicker from "./Date/DatePicker";
 import MyStyledTextField from "./myStyledTextField";
@@ -10,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Circle from "./progress/circle";
 
 const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const { id } = useParams();
@@ -26,6 +26,7 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const [month, setMonths] = useState(0);
   const [year, setYear] = useState(0);
   const [hotelPrice, setHotelPrice] = useState(price);
+  const [loader, setloader] = useState(false);
   // To control the number of dates of booking.
   useEffect(() => {
     if (checkIn < checkOut) {
@@ -65,103 +66,116 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
       return toast.error(`Allowed max. no. of rooms: ${20} per user`);
     } else if (bookingData.name.trim() === "") {
       return toast.error("Name can't be empty");
-    } else if (!/^\d{10}$/.test(bookingData.phone.trim())) {
-      return toast.error("Phone number must be 10 digits long");
+    } else if (!/^\d{10,13}$/.test(bookingData.phone.trim())) {
+      return toast.error("Phone number should be between 10 and 13 digits");
     }
-    returnResponse(
-      await handleHotelBooking(
-        id,
-        userDocument.email,
-        picture1,
-        Hotel,
-        Address,
-        hotelPrice,
-        days,
-        checkIn,
-        checkOut,
-        bookingData.name,
-        bookingData.phone,
-        bookingData.noOfRooms
-      )
+    setloader(true);
+    let response = await handleHotelBooking(
+      id,
+      userDocument.email,
+      picture1,
+      Hotel,
+      Address,
+      hotelPrice,
+      days,
+      checkIn,
+      checkOut,
+      bookingData.name,
+      bookingData.phone,
+      bookingData.noOfRooms
     );
-  }
-  console.log("number of days  = ", days);
-  function returnResponse(response) {
     if (response.success) {
-      toast.success(response.message);
-      // navigate('/')
-    } else {
-      toast.error(response.message);
+      setloader(false);
+      navigate("/booking-success");
     }
   }
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-xl">
-      <div className="text-center text-xl">
-        Price: <span className="font-semibold">USD - {price}</span> / per night
-      </div>
-      <div className="mt-4 rounded-2xl border">
-        <div className="flex w-full ">
-          <DatePicker />
+    <>
+      <div className="rounded-2xl bg-white p-4 shadow-xl">
+        <div className="text-center text-xl">
+          Price: <span className="font-semibold">USD - {price}</span> / per
+          night
         </div>
-        <div className="border-t py-3 px-4">
-          <label>Number of Rooms</label>
-          <MyStyledTextField
-            margin="normal"
-            required
-            fullWidth
-            id="noOfRooms"
-            name="noOfRooms"
-            value={bookingData.noOfRooms}
-            autoComplete="Rooms"
-            onChange={handleBookingData}
-            autoFocus
-          />
+        <div className="mt-4 rounded-2xl border">
+          <div className="flex w-full ">
+            <DatePicker />
+          </div>
+          <div className="border-t py-3 px-4">
+            <label>Number of Rooms</label>
+            <MyStyledTextField
+              margin="normal"
+              required
+              fullWidth
+              id="noOfRooms"
+              name="noOfRooms"
+              value={bookingData.noOfRooms}
+              autoComplete="Rooms"
+              onChange={handleBookingData}
+              autoFocus
+            />
+          </div>
+          <div className="border-t py-3 px-4">
+            <MyStyledTextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              onChange={handleBookingData}
+              autoFocus
+            />
+            <MyStyledTextField
+              margin="normal"
+              required
+              fullWidth
+              id="phone"
+              label="Phone Number"
+              name="phone"
+              autoComplete="phone"
+              onChange={handleBookingData}
+              autoFocus
+            />
+          </div>
         </div>
-        <div className="border-t py-3 px-4">
-          <MyStyledTextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Full Name"
-            name="name"
-            autoComplete="name"
-            onChange={handleBookingData}
-            autoFocus
-          />
-          <MyStyledTextField
-            margin="normal"
-            required
-            fullWidth
-            id="phone"
-            label="Phone Number"
-            name="phone"
-            autoComplete="phone"
-            onChange={handleBookingData}
-            autoFocus
-          />
+        <div className="flex justify-center mt-[15px]">
+          <Button
+            variant="contained"
+            onClick={handleBooking}
+            sx={{
+              padding: "10px",
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
+              background: "#60A5FA",
+            }}
+          >
+            {loader ? (
+              <Circle color="white" />
+            ) : (
+              <>
+                {" "}
+                <Typography
+                  variant="body1"
+                  component="p"
+                  sx={{ whiteSpace: "nowrap", color: "white" }}
+                >
+                  Book this place:
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  sx={{ color: "white" }}
+                >
+                  {days > 0 ? hotelPrice : price}
+                </Typography>
+              </>
+            )}
+          </Button>
         </div>
       </div>
-      <div className="flex justify-center mt-[15px]">
-      <Button
-      variant="contained"
-      onClick={handleBooking}
-      sx={{
-        padding: "10px",
-        display: "flex",
-        alignItems: "center",
-        gap: "20px",
-      }}
-    >
-      <Typography variant="body1" component="p" sx={{ whiteSpace: "nowrap" }}>
-        Book this place:
-      </Typography>
-      <Typography variant="body1" component="p">
-        {days > 0 ? hotelPrice : price}
-      </Typography>
-    </Button>
-      </div>
-    </div>
+    </>
   );
 };
 

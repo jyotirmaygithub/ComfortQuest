@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,53 +7,81 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MyStyledTextField from "../../components/myStyledTextField";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import MyStyledTextField from "../../components/myStyledTextField";
 import { FrontAuthContext } from "../../context/front-auth";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import CircularProgress from "../../components/progress/circle";
+import Copyright from "../../components/copyright";
+import { HotelContext } from "../../context/HotelsContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { handleCreateUser,handleGoogleLogin } = FrontAuthContext();
-
-  function Copyright(props) {
-    return (
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
-        {"Copyright © "}
-        NoteVault {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    );
-  }
-
+  const { handleCreateUser, handleGoogleLogin } = FrontAuthContext();
+  const {handleRetrivingBookingData} = HotelContext()
   const defaultTheme = createTheme();
   const [combinedState, setCombinedState] = useState({
-    name : "",
+    name: "",
     email: "",
     password: "",
   });
+  const [loading, setloading] = useState(false);
+  const [loading2, setloading2] = useState(false);
 
-
- async function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    returnResponse( await handleCreateUser(combinedState.name ,combinedState.email, combinedState.password));
+    if (
+      !combinedState.name ||
+      !combinedState.email ||
+      !combinedState.password
+    ) {
+      toast.error("Username , Email and password are required");
+      return;
+    }
+    // Check if email is in valid format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(combinedState.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    // Check password strength (medium or strong)
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(combinedState.password)) {
+      toast.error(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number"
+      );
+      return;
+    }
+    try {
+      setloading2(true);
+      const response = await handleCreateUser(
+        combinedState.name,
+        combinedState.email,
+        combinedState.password
+      );
+      // Handle successful response
+      returnResponse(response);
+    } catch (error) {
+      // Handle API errors
+      console.error(error);
+      toast.error("An error occurred. Please try again later.");
+    }
   }
 
   function onchange(e) {
     setCombinedState({ ...combinedState, [e.target.name]: e.target.value });
   }
 
-  function returnResponse(response){
+  function returnResponse(response) {
+    setloading(false);
+    setloading2(false);
     if (response.success) {
-      toast.success(response.message)
-      navigate('/')
-    }
-    else{
+      toast.success(response.message);
+      handleRetrivingBookingData()
+      navigate("/");
+    } else {
       toast.error(response.message);
     }
   }
@@ -118,13 +145,11 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-              className="bg-black"
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
             >
-              <p>LOG IN</p>
+              {loading2 ? <CircularProgress color="white" /> : <>SIGN IN</>}
             </Button>
             <div className="mb-4 flex w-full items-center gap-4">
               <div className="h-0 w-1/2 border-[1px]"></div>
@@ -133,16 +158,23 @@ export default function Login() {
             </div>
             {/* Google login button */}
             <div className="flex h-[50px] justify-center">
-              <GoogleLogin
-                 onSuccess={async (credentialResponse) => {
-                  returnResponse(await handleGoogleLogin(credentialResponse.credential))
-                 }}
-                onError={() => {
-                  console.log("Login Failed");
-                }}
-                text="continue_with"
-                width="350"
-              />
+              {loading ? (
+                <CircularProgress  />
+              ) : (
+                <GoogleLogin
+                  onSuccess={async (credentialResponse) => {
+                    setloading(true);
+                    returnResponse(
+                      await handleGoogleLogin(credentialResponse.credential)
+                    );
+                  }}
+                  onError={() => {
+                    console.log("Login Failed");
+                  }}
+                  text="continue_with"
+                  width="350"
+                />
+              )}
             </div>
           </Box>
         </Box>

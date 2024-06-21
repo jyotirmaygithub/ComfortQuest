@@ -6,13 +6,12 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { StateContext } from "../../context/States";
 
-
 const UploadContainer = styled("div")({
   textAlign: "center",
 });
 
-export default function ImageUploader() {
-  const {selectedImages, setSelectedImages} = StateContext();
+export default function ImagePreview() {
+  const { selectedImages, setSelectedImages } = StateContext();
 
   const paperStyle = {
     padding: "32px",
@@ -28,12 +27,13 @@ export default function ImageUploader() {
 
   const iconStyle = {
     fontSize: "200px",
-    color: "rgba(0, 0, 0, 0.54)",
   };
 
   const handleImageUpload = (event) => {
     const files = event.target.files;
-    const selected = Array.from(files).map((file) => URL.createObjectURL(file));
+    console.log("files = ", files);
+    const selected = Array.from(files).map((file) => file);
+    console.log("things in slected =", selected);
     setSelectedImages(selected);
   };
 
@@ -70,7 +70,7 @@ export default function ImageUploader() {
           {selectedImages.map((imageUrl, index) => (
             <ImageListItem key={index}>
               <img
-                src={imageUrl}
+                src={URL.createObjectURL(imageUrl)}
                 alt={`Uploaded image ${index + 1}`}
                 loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}

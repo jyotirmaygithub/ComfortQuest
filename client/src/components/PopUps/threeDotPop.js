@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,8 @@ import { StateContext } from "../../context/States";
 export default function BasicPopover() {
   const navigate = useNavigate();
   const { userDocument } = StateContext();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,15 +26,15 @@ export default function BasicPopover() {
       navigate(`${value}`);
     }
   };
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   return (
-    <div>
+    <div className="relative">
       <MoreHorizOutlinedIcon
-        className="relative left-[220px] cursor-pointer"
+        className="absolute right-0 cursor-pointer"
         aria-describedby={id}
-        variant="contained"
         onClick={handleClick}
       />
       <Popover
@@ -51,7 +52,7 @@ export default function BasicPopover() {
           onClick={() => handleRoutes("/account/edit-profile")}
         >
           Edit Profile
-          <PersonOutline className="text-green-800 text-xl" />
+          <PersonOutline/>
         </Typography>
         <hr />
         <Typography
@@ -59,7 +60,7 @@ export default function BasicPopover() {
           onClick={() => handleRoutes("/booking")}
         >
           Bookings
-          <HotelOutlined className="" />
+          <HotelOutlined />
         </Typography>
       </Popover>
     </div>

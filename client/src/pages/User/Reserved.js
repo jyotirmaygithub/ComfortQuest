@@ -1,6 +1,6 @@
 import React from "react";
 import { HotelContext } from "../../context/HotelsContext";
-import BookedLayout from "../../Layout/Occupied";
+import BookedLayout from "../../Layout/Reserved";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -42,5 +42,5 @@ export default function BookingsPage() {
   }
 
   // Calling a function to check for data in the array before rendering it.
-  return <div className="p-10">{renderBookings()}</div>;
+  return <div className="my-32">{renderBookings()}</div>;
 }

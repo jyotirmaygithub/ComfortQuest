@@ -1,10 +1,12 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { TokenStatusContext } from "./tokenStatus";
+import { StateContext } from "./States";
 
 const Hotels = createContext();
 
 export function HotelContextFunc(props) {
   const { getAuthToken } = TokenStatusContext();
+  const {selectedImages} = StateContext()
   useEffect(() => {
     handleHotelData();
     handleRetrivingBookingData();
@@ -76,21 +78,6 @@ export function HotelContextFunc(props) {
     userPhoneNumber,
     userNoOfRooms
   ) {
-    console.log(
-      "user booking details = ",
-      hotelId,
-      userEmail,
-      hotelPicture,
-      hotelName,
-      hotelAddress,
-      price,
-      noOfDays,
-      checkIn,
-      checkOut,
-      userFullName,
-      userPhoneNumber,
-      userNoOfRooms
-    );
     try {
       const response = await fetch(
         `${process.env.REACT_APP_DEV_URL}/api/booking/booking`,
@@ -119,10 +106,12 @@ export function HotelContextFunc(props) {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      return {
-        success: true,
-        message: "Congratulation you have successfully booked the hotel!",
-      };
+      else{
+        handleRetrivingBookingData()
+        return {
+          success: true,
+        }
+      }
     } catch (error) {
       console.error("Error creating user:", error.message);
       return { success: false, message: "Internal Server Error" };
@@ -155,6 +144,7 @@ export function HotelContextFunc(props) {
   // Route 5 : To register a new hotel in the database.
   async function handleRegisterNewhotel(formData) {
     console.log("formadata = ", formData);
+    console.log("these are the images  = ",selectedImages)
     const {
       chainName,
       hotelName,
@@ -169,12 +159,17 @@ export function HotelContextFunc(props) {
       hotelPhone,
       hotelEmail,
       price,
+      photo1,
+      photo2,
+      photo3,
+      photo4,
+      photo5,
     } = formData;
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_DEV_URL}/api/newHotel/register-new-hotel`,
+        `${process.env.REACT_APP_DEV_URL}/api/newHotel/register-hotel`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "auth-token": getAuthToken(),
@@ -193,6 +188,11 @@ export function HotelContextFunc(props) {
             hotelPhone,
             hotelEmail,
             price,
+            photo1,
+            photo2,
+            photo3,
+            photo4,
+            photo5,
           }),
         }
       );
@@ -202,6 +202,7 @@ export function HotelContextFunc(props) {
       const resData = await response.json();
       console.log("register hotle data = ", resData);
       // setuserBooking(resData);
+      return resData
     } catch (error) {
       console.error("Internal Servor Error", error.message);
     }
@@ -210,6 +211,8 @@ export function HotelContextFunc(props) {
     <Hotels.Provider
       value={{
         hotelData,
+        setHotelData,
+        handleHotelData,
         handleSingleHotel,
         singleHotel,
         handleHotelBooking,

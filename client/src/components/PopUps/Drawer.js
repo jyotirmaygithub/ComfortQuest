@@ -47,8 +47,8 @@ export default function AnchorTemporaryDrawer() {
       navigate(`/account/edit-profile`);
     } else if (value === "Bookings") {
       navigate(`/booking/${userDocument.name}`);
-    } else if (value === "Accommodation") {
-      navigate(`/Accommodation/${userDocument.name}`);
+    } else if (value === "Registration") {
+      navigate(`/Registration/${userDocument.name}`);
     } else {
       navigate(`/${value}`);
     }
@@ -71,12 +71,12 @@ export default function AnchorTemporaryDrawer() {
           sx={{ width: 150, height: 150 }}
           alt="User Avatar"
         />
-        <Button variant="contained" onClick={(e) => handleClick("editProfile")}>
+        <Button variant="contained" sx={{background : "#60A5FA"}} onClick={(e) => handleClick("editProfile")}>
           Edit Profile
         </Button>
       </div>
       <List>
-        {["View Profile", "Bookings", "Accommodation"].map((text, index) => (
+        {["View Profile", "Bookings", "Registration"].map((text, index) => (
           <ListItem key={text} disablePadding onClick={() => handleClick(text)}>
             <ListItemButton>
               <ListItemIcon>{icons[index % iconCount]}</ListItemIcon>

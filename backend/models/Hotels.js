@@ -35,7 +35,7 @@ const hotelSchema = new Schema({
     required: true,
   },
   star_rating: {
-    type : Number,
+    type: Number,
     default: 4,
   },
   url: {
@@ -45,7 +45,6 @@ const hotelSchema = new Schema({
     type: Number,
     required: true,
   },
-  photo: [String],
   overview: {
     type: String,
     required: true,
@@ -62,7 +61,22 @@ const hotelSchema = new Schema({
     type: Number,
     required: true,
   },
+  photo1: {
+    type: String,
+  },
+  photo2: {
+    type: String,
+  },
+  photo3: {
+    type: String,
+  },
+  photo4: {
+    type: String,
+  },
+  photo5: {
+    type: String,
+  },
 });
 
-const newPlaces = mongoose.model("hotels", hotelSchema);
-module.exports = newPlaces;
+const Hotels = mongoose.model("hotels", hotelSchema);
+module.exports = Hotels;
