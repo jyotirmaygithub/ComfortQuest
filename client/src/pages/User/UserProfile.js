@@ -12,7 +12,7 @@ export default function ActionAreaCard() {
 
   return (
     <div className="flex justify-center items-center h-[100vh] w-[100vw] space-y-2">
-      <div className="flex-col justify-center border-2 border-stone-400 border-solid p-4 rounded-md space-y-10">
+      <div className="flex-col justify-center border-2 p-4 rounded-md space-y-10">
         <ThreeDotsPopUp />
         <Avatar
           alt="profile picture"
@@ -21,7 +21,7 @@ export default function ActionAreaCard() {
         />
         <div className="space-y-2">
           <div className="flex justify-start items-center space-x-4">
-            <AccountCircleOutlinedIcon className="h-10 w-10" />
+            <AccountCircleOutlinedIcon sx={{color: "#60A5FA"}} className="h-10 w-10" />
             <Typography
               variant="subtitle1"
               color="text.secondary"
@@ -31,7 +31,7 @@ export default function ActionAreaCard() {
             </Typography>
           </div>
           <div className="flex justify-start items-center space-x-4">
-            <EmailOutlinedIcon />
+            <EmailOutlinedIcon sx={{color: "#60A5FA"}}/>
             <Typography
               variant="subtitle1"
               color="text.secondary"

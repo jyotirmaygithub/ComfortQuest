@@ -46,6 +46,7 @@ export function AuthFunction(props) {
         console.log("this is the authtoken = " + userAuth_Token);
         storeAuthToken(userAuth_Token);
       }
+      handleExistingUserData()
       return { success: true, message: "Your Account has been created!" };
     } catch (error) {
       console.error("Error creating user:", error);
@@ -57,7 +58,7 @@ export function AuthFunction(props) {
   async function handleExistingUser(email, password) {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_DEV_URL}/api/auth/newuser`,
+        `${process.env.REACT_APP_DEV_URL}/api/auth/login`,
         {
           method: "POST",
           headers: {
@@ -74,6 +75,7 @@ export function AuthFunction(props) {
         console.log("this is the authtoken = " + userAuth_Token);
         storeAuthToken(userAuth_Token);
       }
+      handleExistingUserData()
       return { success: true, message: "Login successfully" };
     } catch (error) {
       console.error("Error creating user:", error);
@@ -109,6 +111,7 @@ export function AuthFunction(props) {
         console.log("this is the authtoken = " + userAuth_Token);
         storeAuthToken(userAuth_Token);
       }
+      handleExistingUserData()
       return { success: true, message: "Login successfully" };
     } catch (error) {
       console.error("Error creating user:", error);

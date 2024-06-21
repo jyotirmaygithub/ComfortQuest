@@ -13,6 +13,7 @@ export function StatesFunction(props) {
   const [checkOut, setCheckOut] = useState(dayjs(dateString));
   // state to hold the user seleted images for the register purpuse.
   const [selectedImages, setSelectedImages] = useState([]);
+  const [editLoader, setEditLoader] = useState(false);
 
   return (
     <AppStates.Provider
@@ -25,6 +26,8 @@ export function StatesFunction(props) {
         setCheckOut,
         selectedImages,
         setSelectedImages,
+        editLoader,
+        setEditLoader,
       }}
     >
       {props.children}

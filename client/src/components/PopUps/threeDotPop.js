@@ -52,7 +52,7 @@ export default function BasicPopover() {
           onClick={() => handleRoutes("/account/edit-profile")}
         >
           Edit Profile
-          <PersonOutline className="text-green-800 text-xl" />
+          <PersonOutline/>
         </Typography>
         <hr />
         <Typography
@@ -60,7 +60,7 @@ export default function BasicPopover() {
           onClick={() => handleRoutes("/booking")}
         >
           Bookings
-          <HotelOutlined className="" />
+          <HotelOutlined />
         </Typography>
       </Popover>
     </div>

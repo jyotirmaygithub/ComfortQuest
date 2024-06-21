@@ -14,10 +14,12 @@ import { FrontAuthContext } from "../../context/front-auth";
 import { toast } from "react-toastify";
 import CircleProgress from "../../components/progress/circle";
 import Copyright from "../../components/copyright";
+import { HotelContext } from "../../context/HotelsContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const { handleExistingUser, handleGoogleLogin } = FrontAuthContext();
+  const {handleRetrivingBookingData} = HotelContext()
 
   function handleClickSignUp() {
     navigate("/signup");
@@ -78,6 +80,7 @@ export default function Login() {
     if (response.success) {
       toast.success(response.message);
       navigate("/");
+      handleRetrivingBookingData()
     } else {
       toast.error(response.message);
     }

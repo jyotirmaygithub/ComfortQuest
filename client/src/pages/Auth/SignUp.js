@@ -14,10 +14,12 @@ import { FrontAuthContext } from "../../context/front-auth";
 import { toast } from "react-toastify";
 import CircularProgress from "../../components/progress/circle";
 import Copyright from "../../components/copyright";
+import { HotelContext } from "../../context/HotelsContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const { handleCreateUser, handleGoogleLogin } = FrontAuthContext();
+  const {handleRetrivingBookingData} = HotelContext()
   const defaultTheme = createTheme();
   const [combinedState, setCombinedState] = useState({
     name: "",
@@ -77,6 +79,7 @@ export default function Login() {
     setloading2(false);
     if (response.success) {
       toast.success(response.message);
+      handleRetrivingBookingData()
       navigate("/");
     } else {
       toast.error(response.message);
@@ -142,15 +145,6 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-              // sx={{
-              //   background: "black",
-              //   mt: 3,
-              //   mb: 2,
-              //   "&:hover": {
-              //     background: "grey",
-              //     color: "black", // Change text color to white on hover
-              //   },
-              // }}
               type="submit"
               fullWidth
               variant="contained"

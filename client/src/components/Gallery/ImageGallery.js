@@ -13,10 +13,10 @@ const PlaceGallery = ({ picture1, picture2, picture3, picture4, picture5 }) => {
         <div className="grid gap-4 bg-black px-2 py-20 md:p-8">
           <div>
             <button
-              className="fixed right-2 top-8 flex gap-1 rounded-2xl bg-white py-2 px-4 text-black shadow-sm shadow-gray-500 md:right-12"
+              className="fixed right-2 top-8 flex gap-1 rounded-2xl xl bg-blue-300 hover:bg-blue-500 py-2 px-4 text-white shadow-sm shadow-gray-500 md:right-12"
               onClick={() => setShowAllPhotos(false)}
             >
-              <CloseOutlinedIcon />
+              <CloseOutlinedIcon sx={{color:"white"}} />
               Close photos
             </button>
           </div>
@@ -63,10 +63,10 @@ const PlaceGallery = ({ picture1, picture2, picture3, picture4, picture5 }) => {
       </div>
 
       <button
-        className="absolute bottom-2 right-2 flex gap-1 rounded-xl bg-white py-2 px-4 shadow-md shadow-gray-500"
+        className="absolute bottom-2 right-2 text-white flex gap-1 rounded-xl bg-blue-300 hover:bg-blue-500 py-2 px-4 shadow-md shadow-gray-500"
         onClick={() => setShowAllPhotos(true)}
       >
-        <InsertPhotoOutlinedIcon />
+        <InsertPhotoOutlinedIcon  sx={{color:"white"}}/>
         Show all photos
       </button>
     </div>

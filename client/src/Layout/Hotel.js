@@ -47,7 +47,7 @@ export default function HotelLayout(HotelData) {
           <div className="mt-3 flex items-end justify-between">
             <p>
               <span className="text-lg font-bold text-blue-500">
-                {rates_currency}-{rates_from}
+                USD-{rates_from}
               </span>
               <span className="text-slate-400 text-sm">/night</span>
             </p>

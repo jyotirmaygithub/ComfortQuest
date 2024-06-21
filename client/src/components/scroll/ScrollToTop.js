@@ -35,7 +35,7 @@ const ScrollToTopButton = () => {
     <div className={`scroll-to-top ${isVisible ? 'visible' : ''}`}>
       {isVisible && (
         <Fab color="primary" onClick={scrollToTop} aria-label="scroll-to-top">
-          <KeyboardArrowUpIcon />
+          <KeyboardArrowUpIcon  sx={{color : "white"}}/>
         </Fab>
       )}
     </div>

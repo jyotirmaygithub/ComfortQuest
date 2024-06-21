@@ -2,9 +2,8 @@ import React from 'react';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 
 const AddressLink = ({ placeAddress, className = null }) => {
-    console.log("place address = ", placeAddress)
   if (!className) {
-    className = 'my-3 block';
+    className = 'my-3 block text-blue-400';
   }
 
   className += ' flex gap-1 font-semibold underline';
