@@ -35,7 +35,6 @@ router.post("/booking", fetchUserId, async (req, res) => {
       checkOut: checkOut,
       price: price,
     });
-    // console.log("data = ",data)
     res.json({ msg: "user entered its booking details successfully!" });
   } catch (error) {
     // throw errors.

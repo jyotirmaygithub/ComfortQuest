@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import {
   Button,
   Grid,
@@ -8,20 +7,22 @@ import {
   Checkbox,
   Link,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import MyStyledTextField from "../components/myStyledTextField";
 import ImageUploader from "../components/Gallery/imagePreview";
+import FullscreenLoader from "../components/progress/fullscreen";
+import InstructionBox from "../components/instruction";
+import { useNavigate } from "react-router-dom";
 import { StateContext } from "../context/States";
 import { HotelContext } from "../context/HotelsContext";
 import { EditProfileContext } from "../context/EditProfile";
-import FullscreenLoader from "../components/progress/fullscreen";
-import InstructionBox from "../components/instruction";
+import { toast } from "react-toastify";
 
 export default function PlacesFormPage() {
   const { selectedImages } = StateContext();
   const { handleRegisterNewhotel } = HotelContext();
   const { saveImage } = EditProfileContext();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     chainName: "",
     hotelName: "",
@@ -149,7 +150,6 @@ export default function PlacesFormPage() {
         let imageURL = await saveImage(image);
         formData[`photo${i + 1}`] = imageURL;
       }
-      console.log("form data of the registering = ", formData);
       let response = await handleRegisterNewhotel(formData);
       if(response){
         setloader(false)

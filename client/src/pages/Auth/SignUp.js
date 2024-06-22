@@ -6,15 +6,15 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import MyStyledTextField from "../../components/myStyledTextField";
+import CircularProgress from "../../components/progress/circle";
+import Copyright from "../../components/copyright";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import MyStyledTextField from "../../components/myStyledTextField";
 import { FrontAuthContext } from "../../context/front-auth";
-import { toast } from "react-toastify";
-import CircularProgress from "../../components/progress/circle";
-import Copyright from "../../components/copyright";
 import { HotelContext } from "../../context/HotelsContext";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();

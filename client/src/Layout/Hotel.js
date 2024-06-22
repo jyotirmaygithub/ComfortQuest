@@ -4,27 +4,19 @@ import { HotelContext } from "../context/HotelsContext";
 
 export default function HotelLayout(HotelData) {
   const navigate = useNavigate();
-  const {handleSingleHotel} = HotelContext()
-  const {
-    _id,
-    hotel_name,
-    city,
-    country,
-    photo1,
-    star_rating,
-    rates_currency,
-    rates_from,
-  } = HotelData.HotelData;
+  const { handleSingleHotel } = HotelContext();
+  const { _id, hotel_name, city, country, photo1, star_rating, rates_from } =
+    HotelData.HotelData;
 
-  function handleHotel(){
-    handleSingleHotel(_id)
-    navigate(`/hotel/${_id}`)
+  function handleHotel() {
+    handleSingleHotel(_id);
+    navigate(`/hotel/${_id}`);
   }
   return (
     <section className="my-5 cursor-pointer" onClick={handleHotel}>
       <article className="rounded-xl bg-white p-3 shadow-lg hover:shadow-xl w-[400px] h-[350px]">
         <div className="relative flex items-end overflow-hidden rounded-xl h-[200px]">
-          <img src={photo1} alt="Hotel Photo" className="w-screen" />
+          <img src={photo1} alt="Hotel" className="w-screen" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"

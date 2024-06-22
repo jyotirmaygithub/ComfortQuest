@@ -3,17 +3,17 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { Logout, Person2Outlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import { CardActionArea } from "@mui/material";
+import { Logout, Person2Outlined } from "@mui/icons-material";
 import ProfilePopUp from "../../components/PopUps/EditProfilePop"; // Assuming this is a custom component for profile editing
+import CircleProgress from "../../components/progress/circle";
 import { useNavigate } from "react-router-dom";
 import { TokenStatusContext } from "../../context/tokenStatus";
 import { StateContext } from "../../context/States";
 import { FrontAuthContext } from "../../context/front-auth";
-import CircleProgress from "../../components/progress/circle";
 
 export default function ActionAreaCard() {
   const navigate = useNavigate();

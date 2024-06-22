@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import AddressLink from "../components/AdressLink";
 import BookingDetails from "../components/BookingDetails";
 import PlaceGallery from "../components/Gallery/ImageGallery";
@@ -9,16 +9,16 @@ import { useParams } from "react-router-dom";
 const PlacePage = () => {
   const { id } = useParams();
   const { singleHotel, handleSingleHotel } = HotelContext();
+
   useEffect(() => {
     handleSingleHotel(id);
   }, []);
-  console.log("a hotel = ", singleHotel);
+  
   const {
     hotel_name,
     overview,
     numberrooms,
     numberfloor,
-    perks,
     rates_from,
     url,
     addressline1,

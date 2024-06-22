@@ -6,8 +6,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import BookedDates from "../components/Date/BookedDates";
-import { useNavigate } from "react-router-dom";
 import  Delete  from "../components/PopUps/Warning";
+import { useNavigate } from "react-router-dom";
 
 export default function MediaControlCard(props) {
   const navigate = useNavigate();
@@ -26,8 +26,6 @@ export default function MediaControlCard(props) {
   function handleViewHotel() {
     navigate(`/hotel/${hotel_id}`);
   }
-
-  // Functionality for deleting the booking can be added here
 
   return (
     <Box maxWidth="600px" mx="auto">
@@ -53,7 +51,7 @@ export default function MediaControlCard(props) {
               Total Number of Rooms: {user_total_rooms}
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Total Price: {price}
+              Total Price ($): {price}
             </Typography>
             <BookedDates CheckIn={checkIn} CheckOut={checkOut} />
           </CardContent>

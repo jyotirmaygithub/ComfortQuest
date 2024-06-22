@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import { useNavigate } from "react-router-dom";
 import { HotelOutlined, PersonOutline } from "@mui/icons-material";
 import { StateContext } from "../../context/States";
 

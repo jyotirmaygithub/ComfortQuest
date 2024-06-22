@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import DatePicker from "./Date/DatePicker";
 import MyStyledTextField from "./myStyledTextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Circle from "./progress/circle";
 import { StateContext } from "../context/States";
 import { TokenStatusContext } from "../context/tokenStatus";
 import { HotelContext } from "../context/HotelsContext";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Circle from "./progress/circle";
+import { toast } from "react-toastify";
 
-const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
+const BookingWidget = ({ price, Hotel, Address, picture1 }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { checkIn, checkOut, userDocument } = StateContext();
   const { checkCookie } = TokenStatusContext();
   const { handleHotelBooking } = HotelContext();
+  const navigate = useNavigate();
   const [bookingData, setBookingData] = useState({
     noOfRooms: 1,
     name: "",
@@ -27,19 +27,18 @@ const BookingWidget = ({ price, numberOfRooms, Hotel, Address, picture1 }) => {
   const [year, setYear] = useState(0);
   const [hotelPrice, setHotelPrice] = useState(price);
   const [loader, setloader] = useState(false);
-  // To control the number of dates of booking.
+
   useEffect(() => {
+    
     if (checkIn < checkOut) {
       const days = Math.abs(checkOut.$D - checkIn.$D);
       const months = Math.abs(checkOut.$M - checkIn.$M);
       const year = Math.abs(checkOut.$Y - checkIn.$Y);
-      // console.log("value of date , month and year =", days, month, year);
       const hotelPrice = days * bookingData.noOfRooms * price;
       setDays(days);
       setMonths(months);
       setYear(year);
       setHotelPrice(hotelPrice);
-      // console.log("hotel price = ", hotelPrice);
     }
   }, [checkIn, checkOut, bookingData.noOfRooms, price]);
 

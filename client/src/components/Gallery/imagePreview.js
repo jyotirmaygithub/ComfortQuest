@@ -31,9 +31,7 @@ export default function ImagePreview() {
 
   const handleImageUpload = (event) => {
     const files = event.target.files;
-    console.log("files = ", files);
     const selected = Array.from(files).map((file) => file);
-    console.log("things in slected =", selected);
     setSelectedImages(selected);
   };
 
@@ -71,7 +69,7 @@ export default function ImagePreview() {
             <ImageListItem key={index}>
               <img
                 src={URL.createObjectURL(imageUrl)}
-                alt={`Uploaded image ${index + 1}`}
+                alt={`Uploaded  ${index + 1}`}
                 loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />

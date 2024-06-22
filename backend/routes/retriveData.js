@@ -11,7 +11,6 @@ router.post(
     try {
         const {id} = req.body;
         const singleHotelData = await Hotel.findById({_id: id});
-        console.log("let see the hotel =", singleHotelData);
         res.json({ HotelData: singleHotelData });
     } catch (error) {
       // throw errors.

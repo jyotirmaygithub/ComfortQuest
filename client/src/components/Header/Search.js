@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { HotelContext } from "../../context/HotelsContext";
 
 export default function SearchBar () {
-  const { hotelData, setHotelData,handleHotelData } = HotelContext();
+  const { hotelData, setHotelData } = HotelContext();
   const [searchText, setSearchText] = useState("");
 
   function onchange(value) {

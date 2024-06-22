@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import { StateContext } from "../../context/States";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ThreeDotsPopUp from "../../components/PopUps/threeDotPop";
+import { StateContext } from "../../context/States";
 
 export default function ActionAreaCard() {
   const { userDocument } = StateContext();

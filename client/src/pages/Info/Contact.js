@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import CircleProgress from "../../components/progress/circle";
 import MyStyledTextField from "../../components/myStyledTextField";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +28,6 @@ const ContactPage = () => {
     }
 
     setLoader(true);
-    console.log("contact = ", formData);
     try {
       const response = await fetch(
         `${process.env.REACT_APP_DEV_URL}/api/nodemailer/send-email`,
@@ -68,7 +67,6 @@ const ContactPage = () => {
         Contact Us
       </Typography>
 
-      {/* <form onSubmit={handleSubmit}> */}
       <MyStyledTextField
         required
         fullWidth
@@ -114,7 +112,6 @@ const ContactPage = () => {
       >
         {loader ? <CircleProgress color="#60A5FA" /> : <>Send Message</>}
       </Button>
-      {/* </form> */}
       <ToastContainer />
     </Box>
   );

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
 import Confetti from 'react-confetti';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import StarIcon from '@mui/icons-material/Star';
+import { useNavigate } from "react-router-dom";
 
 const HotelRegistrationSuccess = () => {
   const [showConfetti, setShowConfetti] = useState(true);

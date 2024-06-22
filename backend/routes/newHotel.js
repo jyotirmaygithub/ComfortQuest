@@ -47,9 +47,8 @@ router.post("/register-hotel", fetchUserId, async (req, res) => {
       photo2: photo2,
       photo3: photo3,
       photo4: photo4,
-      photo5: photo4,
+      photo5: photo5,
     });
-    console.log("data of the new hotel = ", data);
     res.json({ data });
   } catch (error) {
     // throw errors.

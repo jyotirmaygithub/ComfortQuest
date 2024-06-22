@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import HotelLayout from "./Hotel";
-import { HotelContext } from "../context/HotelsContext";
 import BigCircle from "../components/progress/Bigcircle"; // Assuming this is the correct path
+import { HotelContext } from "../context/HotelsContext";
 
 export default function Hotels() {
   const { hotelData } = HotelContext();
-  console.log("hotel data =",hotelData.length)
   return (
     <>
     

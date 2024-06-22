@@ -27,7 +27,6 @@ export default function AnchorTemporaryDrawer() {
   const { userDocument } = StateContext();
   const { checkCookie, deleteAuthTokenCookie } = TokenStatusContext();
   const [state, setState] = React.useState({});
-
   const toggleDrawer = (anchor, open) => async (event) => {
     if(!checkCookie()){
       navigate('/login')
@@ -67,7 +66,7 @@ export default function AnchorTemporaryDrawer() {
     >
       <div className="grid justify-center items-center my-2 space-y-2">
         <Avatar
-          src={userDocument.picture}
+          src={userDocument ? userDocument.picture : ""}
           sx={{ width: 150, height: 150 }}
           alt="User Avatar"
         />
@@ -105,7 +104,7 @@ export default function AnchorTemporaryDrawer() {
         <Button className="space-x-2" onClick={toggleDrawer("avatar", true)}>
           {/* Render your Avatar component here */}
           <MenuOutlined sx={{color:"black"}}/>
-          <Avatar src={userDocument.picture} alt="User Avatar" />
+          <Avatar src={userDocument ? userDocument.picture : ""} alt="User Avatar" />
         </Button>
         <Drawer
           anchor="right"

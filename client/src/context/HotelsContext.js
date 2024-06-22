@@ -7,10 +7,12 @@ const Hotels = createContext();
 export function HotelContextFunc(props) {
   const { getAuthToken } = TokenStatusContext();
   const {selectedImages} = StateContext()
+
   useEffect(() => {
     handleHotelData();
     handleRetrivingBookingData();
   }, []);
+
   // state to store array of the total number of hotels.
   const [hotelData, setHotelData] = useState([]);
   const [singleHotel, setSingleHotel] = useState({});
@@ -18,6 +20,7 @@ export function HotelContextFunc(props) {
 
   // Route 1 : To fetch single hotel data by providing the hotel id.
   async function handleSingleHotel(id) {
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_DEV_URL}/api/retriveData/single-hotel`,
@@ -143,8 +146,6 @@ export function HotelContextFunc(props) {
 
   // Route 5 : To register a new hotel in the database.
   async function handleRegisterNewhotel(formData) {
-    console.log("formadata = ", formData);
-    console.log("these are the images  = ",selectedImages)
     const {
       chainName,
       hotelName,
@@ -200,8 +201,6 @@ export function HotelContextFunc(props) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const resData = await response.json();
-      console.log("register hotle data = ", resData);
-      // setuserBooking(resData);
       return resData
     } catch (error) {
       console.error("Internal Servor Error", error.message);

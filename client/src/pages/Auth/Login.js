@@ -6,15 +6,15 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MyStyledTextField from "../../components/myStyledTextField";
-import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
-import { FrontAuthContext } from "../../context/front-auth";
-import { toast } from "react-toastify";
 import CircleProgress from "../../components/progress/circle";
 import Copyright from "../../components/copyright";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+import { FrontAuthContext } from "../../context/front-auth";
 import { HotelContext } from "../../context/HotelsContext";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -134,15 +134,6 @@ export default function Login() {
               onChange={onchange}
             />
             <Button
-              // sx={{
-              //   background: "black",
-              //   mt: 3,
-              //   mb: 2,
-              //   "&:hover": {
-              //     background: "black",
-              //     color: "white", // Change text color to white on hover
-              //   },
-              // }}
               type="submit"
               fullWidth
               variant="contained"

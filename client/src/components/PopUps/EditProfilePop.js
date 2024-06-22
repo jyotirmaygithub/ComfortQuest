@@ -7,11 +7,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import MyStyledTextField from "../myStyledTextField";
 import Avatar from "@mui/material/Avatar";
+import EditIcon from "@mui/icons-material/Edit";
 import { StateContext } from "../../context/States";
 import { EditProfileContext } from "../../context/EditProfile";
 import { FrontAuthContext } from "../../context/front-auth";
 import { toast } from "react-toastify";
-import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
 
 const AvatarContainer = styled("div")({
@@ -120,7 +120,6 @@ export default function FormDialog({ open, openState }) {
             onChange={handleImageChange}
           />
         </AvatarContainer>
-        {/* <DialogContentText>Update User Name.</DialogContentText> */}
         <MyStyledTextField
           margin="normal"
           value={userName ? userName : name}

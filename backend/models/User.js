@@ -18,7 +18,7 @@ const userDetails = new Schema({
   picture : {
     type : String,
     required : true,
-    default : "https://res.cloudinary.com/rahul4019/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1695133265/pngwing.com_zi4cre.png"
+    default : "https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w1MTIzNDJ8MHwxfGFsbHx8fHx8fHx8fDE3MTkwNTM0OTl8&ixlib=rb-4.0.3&q=85"
   },
   date: {
     type: Date,

@@ -1,9 +1,9 @@
 import React from "react";
-import { HotelContext } from "../../context/HotelsContext";
-import BookedLayout from "../../Layout/Reserved";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import BookedLayout from "../../Layout/Reserved";
+import { useNavigate } from "react-router-dom";
+import { HotelContext } from "../../context/HotelsContext";
 
 export default function BookingsPage() {
   const { userBooking } = HotelContext();
